@@ -1,0 +1,465 @@
+const [site, projects] = await Promise.all([
+  fetch("data/site.json").then((response) => response.json()),
+  fetch("data/projects.json").then((response) => response.json()),
+]);
+
+const copy = {
+  navHome: "Home", navProjects: "Projects", navGames: "Games", navAbout: "About", navTalk: "Let’s talk",
+  heroEyebrow: "GAME DEVELOPER · SOUND ENGINEERING BACKGROUND", heroTitleA: "I make games", heroTitleB: "feel good.",
+  heroLead: "I build responsive, playful game systems — and the audio that brings them to life.",
+  heroButton: "Check out my work", heroAboutButton: "Read my full profile",
+  skills: "Unity, C#, Game Feel, Systems Design, Audio, FMOD",
+  showreelTitle: "Selected work", showreelSubtitle: "CODE · SOUND · FEEL", showreelCaptionA: "A world of small details", showreelCaptionB: "and big moments.",
+  showreelFooter: "Game programming + game audio", showreelNote: "A quick look at the worlds and systems I like to build.",
+  workEyebrow: "THE WORK", workTitle: "Two sides of the same experience.", workDescription: "From how a character moves to how a world sounds, I care about the details players feel.",
+  programmingTitle: "Game Programming", programmingDescription: "Game systems, mechanics, tools and prototypes.", audioTitle: "Game Audio", audioDescription: "Music, sound design and audio implementation.",
+  projectsEyebrow: "PROJECTS", projectsTitleA: "Systems that play.", projectsTitleB: "Sound that stays.", projectsDescription: "",
+  filterAll: "All projects", filterProgramming: "Game Programming", filterAudio: "Game Audio", projectsProgrammingDescription: "Mechanics, systems, tools and prototypes.", projectsAudioDescription: "Music, sound design and implementation.",
+  gamesEyebrow: "GAMES", gamesTitleA: "Playable", gamesTitleB: "game projects", gamesDescription: "",
+  gamesReadyTitle: "Ready to play.", gamesReadyDescription: "Choose a game below to launch its WebGL build here or open its itch.io page.", gamesEmptyTitle: "Playable builds are on the way.", gamesEmptyDescription: "Upload a WebGL build in the local admin panel or add an itch.io link to a project.",
+  gamesExplore: "Explore the projects", gamesPlay: "Play WebGL", gamesItch: "Open on itch.io", gameProjectLabel: "GAME PROJECT", gameShowcaseLabel: "Project showcase",
+  aboutEyebrow: "ABOUT", aboutTitleA: "Hi, I’m Yusuf.", aboutTitleB: "I build game experiences.", aboutLead: "Game developer with a background in sound engineering.",
+  aboutStoryEyebrow: "THE SHORT VERSION", aboutStoryTitleA: "From shaping sound", aboutStoryTitleB: "to shaping play.",
+  aboutParagraph1: "Sound engineering gave me a close ear for timing, clarity and emotion. Game development lets me bring those instincts into interactive systems: the controls, feedback and audio that make a world feel responsive.",
+  aboutParagraph2: "I work across Unity and C#, gameplay systems, game feel, FMOD and audio implementation. I enjoy finding the connection between what a game does and what a player feels.", aboutParagraph3: "", aboutParagraph4: "",
+  aboutButton: "See what I’m building", focusEyebrow: "FOCUS AREAS", focusAreas: "Unity & C#, Gameplay systems, Responsive controls, Game feel, FMOD, Audio implementation, Sound design",
+  principlesEyebrow: "WHAT I CARE ABOUT", principlesText: "Every interaction has a rhythm. I like making that rhythm feel clear, playful and satisfying — through code, sound, or the way they work together.",
+  footerEyebrow: "HAVE A PROJECT IN MIND?", footerTitleA: "Let’s make something", footerTitleB: "feel good.", footerDescription: "Game programming, game audio, and the details that bring them together.",
+  footerEmailButton: "Email Yusuf", footerNote: "Built with curiosity and a little bit of glow.", footerAbout: "More about me", cvButton: "Download CV", dialogEyebrow: "SHOWREEL", dialogTitle: "A reel of selected work",
+  contactMissing: "Contact details can be added in the admin panel.", showreelReady: "The showreel is ready to watch.",
+  showreelMissing: "Add a YouTube or Vimeo URL in the admin panel to enable video playback.", showreelAction: "Watch the showreel", showreelBrowse: "Browse the projects",
+  ...site.copy,
+};
+const splitCopy = (key) => (copy[key] || "").split(",").map((item) => item.trim()).filter(Boolean);
+
+const app = document.querySelector("#app");
+const page = document.body.dataset.page || "home";
+const esc = (value = "") => String(value).replace(/[&<>"']/g, (char) => ({
+  "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+}[char]));
+const icon = {
+  github: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.76-.24.76-.54v-2.1c-3.1.68-3.75-1.32-3.75-1.32-.5-1.3-1.24-1.65-1.24-1.65-1.01-.7.08-.69.08-.69 1.12.08 1.7 1.15 1.7 1.15.99 1.7 2.6 1.2 3.23.92.1-.72.39-1.2.7-1.48-2.48-.28-5.09-1.24-5.09-5.52 0-1.22.44-2.22 1.15-3-.12-.28-.5-1.42.11-2.95 0 0 .94-.3 3.05 1.15a10.6 10.6 0 0 1 5.55 0c2.12-1.44 3.05-1.15 3.05-1.15.61 1.53.23 2.67.11 2.95.72.78 1.15 1.78 1.15 3 0 4.3-2.62 5.23-5.12 5.5.4.35.75 1.03.75 2.08v3.1c0 .3.2.65.77.54A11.1 11.1 0 0 0 12 .9Z"/></svg>',
+  linkedin: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 2H3.55C2.69 2 2 2.68 2 3.52v16.96c0 .84.69 1.52 1.55 1.52h16.9c.86 0 1.55-.68 1.55-1.52V3.52c0-.84-.69-1.52-1.55-1.52ZM7.94 18.7H4.98V9.16h2.96v9.54ZM6.46 7.86a1.72 1.72 0 1 1 0-3.44 1.72 1.72 0 0 1 0 3.44ZM19.02 18.7h-2.95v-4.64c0-1.1-.02-2.52-1.54-2.52-1.54 0-1.78 1.2-1.78 2.44v4.72H9.8V9.16h2.83v1.3h.04c.4-.75 1.36-1.54 2.8-1.54 3 0 3.55 1.97 3.55 4.53v5.25Z"/></svg>',
+  gamepad: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.2 6h9.6c2.3 0 3.5 1.5 4.1 3.6l1 4.7c.5 2.2-1.9 3.8-3.6 2.4l-2.2-1.8H7.9l-2.2 1.8c-1.7 1.4-4.1-.2-3.6-2.4l1-4.7C3.7 7.5 4.9 6 7.2 6Zm.3 2.7v1.8H5.7v1.8h1.8v1.8h1.8v-1.8h1.8v-1.8H9.3V8.7H7.5Zm8.8 1a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2Zm2.6 2.1a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2Z"/></svg>',
+  arrow: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+};
+
+const socials = [
+  ["github", "GitHub"], ["linkedin", "LinkedIn"],
+].filter(([key]) => site.socials?.[key]);
+
+const gmailLogo = '<svg class="gmail-logo" viewBox="0 0 24 24" role="img" aria-label="Gmail"><path fill="#4285f4" d="M22 21h-4V9.2l4-3V21Z"/><path fill="#34a853" d="M2 21h4V9.2L2 6.2V21Z"/><path fill="#ea4335" d="M22 5.3 20.1 3.8 12 10 3.9 3.8 2 5.3l2.4 4.1L12 15l7.6-5.6L22 5.3Z"/><path fill="#fbbc04" d="M2 5.3v14c0 1 .9 1.7 2 1.7h2V9.2L2 5.3Z"/><path fill="#c5221f" d="M18 9.2V21h2c1.1 0 2-.7 2-1.7v-14l-4 3.9Z"/></svg>';
+
+function contactActions(className = "footer-contact-actions") {
+  const cvButton = site.cvUrl
+    ? `<a class="footer-utility-button" href="${esc(site.cvUrl)}" download aria-label="Download CV"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 17v3h14v-3"/></svg><span>Download CV</span></a>`
+    : "";
+  const socialLinks = socials.map(([key, label]) => `<a class="footer-social-link" href="${esc(site.socials[key])}" aria-label="${label}" title="${label}" target="_blank" rel="noreferrer">${icon[key] || icon.gamepad}</a>`).join("");
+  return `<div class="${className}">${cvButton}<span class="email-copy-wrap"><button class="footer-utility-button email-copy-button" type="button" data-email="${esc(site.email || "")}" aria-label="Copy email address" title="Copy email address">${gmailLogo}<svg class="copy-check-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg></button><span class="email-copy-status" role="status" aria-live="polite"></span></span><div class="footer-social-links">${socialLinks}</div></div>`;
+}
+
+function header(active) {
+  return `<a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header wrap">
+      <a class="brand" href="index.html" aria-label="${esc(site.name)} home"><span class="brand-name">${esc(site.name)}</span><span class="brand-role">${esc(site.role)}</span></a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav"><span></span><span></span><span></span><span class="sr-only">Toggle navigation</span></button>
+      <nav class="primary-nav" id="primary-nav" aria-label="Main navigation">
+        <a class="${active === "home" ? "active" : ""}" href="index.html">${esc(copy.navHome)}</a>
+        <a class="${active === "projects" ? "active" : ""}" href="projects.html">${esc(copy.navProjects)}</a>
+        <a class="${active === "games" ? "active" : ""}" href="games.html">${esc(copy.navGames)}</a>
+        <a class="${active === "about" ? "active" : ""}" href="about.html">${esc(copy.navAbout)}</a>
+      </nav>
+      <div class="header-actions"></div>
+    </header>`;
+}
+
+function footer() {
+  return `<footer class="site-footer" id="contact"><div class="wrap footer-inner"><div class="footer-bottom"><a class="brand brand-compact" href="index.html"><span class="brand-name">${esc(site.name)}</span><span class="brand-role">${esc(site.role)}</span></a>${copy.footerNote ? `<span class="footer-note">${esc(copy.footerNote)}</span>` : ""}${contactActions()}</div></div></footer>`;
+}
+
+function tags(items) {
+  return `<ul class="tag-list" aria-label="Project tags">${items.map((tag) => `<li>${esc(tag)}</li>`).join("")}</ul>`;
+}
+
+function youtubeEmbedUrl(value) {
+  if (!value) return "";
+  try {
+    const url = new URL(value);
+    const host = url.hostname.toLowerCase().replace(/^www\./, "");
+    let videoId = "";
+    if (host === "youtu.be") videoId = url.pathname.split("/").filter(Boolean)[0] || "";
+    else if (["youtube.com", "m.youtube.com", "youtube-nocookie.com"].includes(host)) {
+      videoId = url.searchParams.get("v") || url.pathname.match(/^\/(?:embed|shorts|live)\/([^/?]+)/)?.[1] || "";
+    }
+    return /^[A-Za-z0-9_-]{11}$/.test(videoId) ? `https://www.youtube-nocookie.com/embed/${videoId}?rel=0` : "";
+  } catch { return ""; }
+}
+
+function projectThumbnail(project) {
+  if (project.image) return project.image;
+  const embed = youtubeEmbedUrl(project.videoUrl);
+  const videoId = embed.match(/\/embed\/([^?]+)/)?.[1];
+  return videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : "assets/sifb.svg";
+}
+
+function projectMedia(project, expanded) {
+  if (!expanded) return `<img src="${esc(projectThumbnail(project))}" alt="${esc(project.alt)}" loading="lazy" width="800" height="600" />`;
+  const videoUrl = youtubeEmbedUrl(project.videoUrl);
+  if (videoUrl) return `<iframe src="${videoUrl}" title="${esc(project.title)} video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
+  return `<div class="video-placeholder"><span>▶</span><p>Add a YouTube video URL in the admin panel to show the video here.</p></div>`;
+}
+
+function projectCard(project, expanded = false) {
+  const links = [
+    ...(project.links || []),
+    ...(project.gamePath ? [{ label: "Play on this site", url: `games.html?game=${encodeURIComponent(project.id)}`, kind: "play" }] : []),
+    ...(project.itchUrl ? [{ label: "View on itch.io", url: project.itchUrl }] : []),
+  ].filter((link) => link.url);
+  const description = linkedDescription(project);
+  return `<article id="project-${esc(project.id)}" class="project-card ${expanded ? "is-expanded" : ""}" data-project="${esc(project.id)}" tabindex="0" aria-label="${esc(project.title)} project, click to expand">
+    <button class="project-trigger" type="button" aria-expanded="${expanded}" aria-controls="details-${esc(project.id)}">
+      <span class="project-title">${esc(project.title)}</span><span class="expand-mark" aria-hidden="true">${expanded ? "−" : "+"}</span>
+    </button>
+    <div class="project-visual ${expanded && youtubeEmbedUrl(project.videoUrl) ? "has-video" : expanded ? "is-placeholder" : ""}">${projectMedia(project, expanded)}</div>
+    ${tags(project.tags)}
+    <div class="project-details" id="details-${esc(project.id)}" ${expanded ? "" : "hidden"}>
+      ${project.subtitle ? `<span class="project-subtitle">${esc(project.subtitle)}</span>` : ""}
+      <p>${description}</p>
+      ${project.date ? `<time class="project-date" datetime="${esc(project.date)}">${esc(project.date)}</time>` : ""}
+      ${links.length ? `<div class="project-links">${links.map((link) => projectAction(link)).join("")}</div>` : ""}
+    </div>
+  </article>`;
+}
+
+function linkedDescription(project) {
+  const text = String(project.description || "");
+  const link = (project.textLinks || []).find((item) => item.text && item.targetProjectId && text.includes(item.text));
+  if (!link) return esc(text);
+  const index = text.indexOf(link.text);
+  const href = `projects.html#project-${encodeURIComponent(link.targetProjectId)}`;
+  return `${esc(text.slice(0, index))}<a class="inline-project-link" data-project-target="${esc(link.targetProjectId)}" href="${esc(href)}">${esc(link.text)}</a>${esc(text.slice(index + link.text.length))}`;
+}
+
+function projectAction(link) {
+  const isPlay = link.kind === "play" || link.label.toLowerCase() === "play on this site";
+  const isInternal = /^projects\.html#project-/.test(link.url);
+  let service = "external";
+  try {
+    const host = new URL(link.url, location.href).hostname.toLowerCase().replace(/^www\./, "");
+    if (host === "github.com") service = "github";
+    else if (["youtube.com", "youtu.be", "youtube-nocookie.com"].includes(host)) service = "youtube";
+    else if (host === "itch.io" || host.endsWith(".itch.io")) service = "itch";
+  } catch { /* Use the generic link icon for invalid or local URLs. */ }
+  if (isPlay) service = "play";
+  const serviceIcon = {
+    play: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7.5A2.5 2.5 0 0 1 7.5 5h9A2.5 2.5 0 0 1 19 7.5v9a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 5 16.5v-9Z"/><path class="play-mark" d="m10 8.5 5 3.5-5 3.5v-7Z"/><path d="M8 3v2m8-2v2M8 19v2m8-2v2"/></svg>',
+    github: icon.github,
+    youtube: '<svg viewBox="0 0 24 24" aria-hidden="true"><path class="youtube-mark" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8Z"/><path class="youtube-play" d="m9.6 15.5 6.2-3.5-6.2-3.5v7Z"/></svg>',
+    itch: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="1" width="22" height="22" rx="6"/><text x="12" y="15" text-anchor="middle">itch</text></svg>',
+    external: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 5h6v6M19 5l-9 9"/><path d="M18 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
+  }[service];
+  const target = isInternal || isPlay ? "" : ' target="_blank" rel="noreferrer"';
+  const targetId = isInternal ? link.url.split("#project-")[1] : "";
+  return `<a class="project-action-button service-${service} ${isPlay ? "is-play" : ""}" href="${esc(link.url)}"${target}${targetId ? ` data-project-target="${esc(targetId)}"` : ""}><span class="action-icon">${serviceIcon}</span><span>${esc(link.label)}</span>${icon.arrow}</a>`;
+}
+
+function groupBlock(category, title, subtitle, items, compact = false) {
+  return `<section class="work-group ${compact ? "work-group-compact" : ""}" data-category="${category}">
+    <div class="group-heading"><span class="group-icon" aria-hidden="true">${category === "programming" ? icon.gamepad : "<span class='sound-bars'><i></i><i></i><i></i><i></i><i></i></span>"}</span><div><h2>${esc(title)}</h2><p>${esc(subtitle)}</p></div></div>
+    <div class="project-grid">${items.map((project) => projectCard(project)).join("")}</div>
+  </section>`;
+}
+
+function homePage() {
+  const programming = projects.filter((item) => item.category === "programming");
+  const audio = projects.filter((item) => item.category === "audio");
+  const showreelProject = projects.find((item) => item.id === "game-feel-systems");
+  const showreelImage = showreelProject ? projectThumbnail(showreelProject) : "assets/sifb.svg";
+  return `<main id="main">
+    <section class="hero wrap">
+      <div class="hero-copy"><h1>${esc(copy.heroTitleA)}<br /><span class="gradient-text">${esc(copy.heroTitleB)}</span></h1>
+        <p class="hero-lede">${esc(copy.heroLead)}</p>
+        <ul class="tag-list skill-pills" aria-label="Core skills">${splitCopy("skills").map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
+        <div class="hero-actions"><a class="button button-violet" href="projects.html">${esc(copy.heroButton || "Check out my work")} ${icon.arrow}</a><a class="button button-violet" href="about.html">${esc(copy.heroAboutButton || "Read my full profile")} ${icon.arrow}</a></div>
+      </div>
+      <div class="showreel-wrap"><div class="showreel-card" style="--reel-image:url('${esc(showreelImage)}')">
+        <div class="showreel-top"><span>${esc(copy.showreelTitle)}</span><span class="reel-duration">${esc(copy.showreelSubtitle)}</span></div>
+        <div class="reel-scene"><span class="reel-orbit orbit-one"></span><span class="reel-orbit orbit-two"></span><button class="play-button" type="button" aria-label="Open showreel details">▶</button></div>
+        <div class="showreel-bottom"><span>${esc(copy.showreelFooter)}</span><a href="projects.html" aria-label="Explore selected projects">${icon.arrow}</a></div>
+      </div><p class="reel-note">${esc(copy.showreelNote)}</p></div>
+    </section>
+    <section class="work-section wrap" id="work">
+      <div class="work-columns">${groupBlock("programming", copy.programmingTitle, copy.programmingDescription, programming)}${groupBlock("audio", copy.audioTitle, copy.audioDescription, audio)}</div>
+    </section>
+  </main>`;
+}
+
+function projectsPage() {
+  const programming = projects.filter((item) => item.category === "programming");
+  const audio = projects.filter((item) => item.category === "audio");
+  return `<main id="main" class="page-main wrap"><header class="page-heading"><h1>${esc(copy.projectsTitleA)}<br /><span class="gradient-text">${esc(copy.projectsTitleB)}</span></h1></header>
+    <div class="filter-row" role="group" aria-label="Filter projects"><button class="filter-button active" data-filter="all" aria-pressed="true">${esc(copy.filterAll)}</button><button class="filter-button" data-filter="programming" aria-pressed="false">${esc(copy.filterProgramming)}</button><button class="filter-button" data-filter="audio" aria-pressed="false">${esc(copy.filterAudio)}</button></div>
+    <div class="projects-page-grid">${groupBlock("programming", copy.programmingTitle, copy.projectsProgrammingDescription, programming, true)}${groupBlock("audio", copy.audioTitle, copy.projectsAudioDescription, audio, true)}</div>
+  </main>`;
+}
+
+function gamesPage() {
+  const games = projects.filter((item) => item.category === "programming" && item.playable === true);
+  const requestedGame = new URLSearchParams(location.search).get("game");
+  const firstPlayable = games.find((game) => game.id === requestedGame && game.gamePath) || games.find((game) => game.gamePath);
+  const width = Number(firstPlayable?.gameWidth) || 1080;
+  const height = Number(firstPlayable?.gameHeight) || 1920;
+  return `<main id="main" class="games-page wrap">
+    <header class="games-heading"><div><span class="eyebrow">${esc(copy.gamesEyebrow)}</span><h1>${esc(copy.gamesTitleA)} <span class="gradient-text">${esc(copy.gamesTitleB)}</span></h1></div></header>
+    <section class="game-arcade drawer-open" id="game-arcade" aria-label="Playable games">
+      <aside class="game-drawer" id="game-drawer" aria-label="Game list">
+        <div class="game-drawer-heading"><div><span class="eyebrow">YOUR GAMES</span><h2>Choose a game</h2></div><button class="game-drawer-close" id="game-drawer-close" type="button" aria-label="Close game list">×</button></div>
+        <div class="game-drawer-list">${games.length ? games.map((game) => `<button class="game-choice ${game.id === firstPlayable?.id ? "active" : ""}" type="button" data-game-id="${esc(game.id)}" ${game.gamePath ? `aria-pressed="${game.id === firstPlayable?.id}"` : "disabled title='Playable build not uploaded yet'"}><img src="${esc(projectThumbnail(game))}" alt="" loading="lazy"/><span><strong>${esc(game.title)}</strong><small>${game.gamePath ? esc(copy.gamesPlay) : esc(copy.gameShowcaseLabel)}</small></span>${game.gamePath ? `<span class="game-choice-mark" aria-hidden="true">›</span>` : ""}</button>`).join("") : `<p class="game-list-empty">Mark a project as playable in the admin panel to show it here.</p>`}</div>
+        <a class="game-project-link" href="projects.html">${esc(copy.gamesExplore)} ${icon.arrow}</a>
+      </aside>
+      <div class="game-stage" id="game-stage">
+        <div class="game-stage-toolbar"><button class="game-menu-button" id="game-menu-button" type="button" aria-expanded="true" aria-controls="game-drawer">☰ <span>Games</span></button><span class="game-now-playing" id="game-now-playing">${esc(firstPlayable?.title || "Choose a game")}</span><button class="game-fullscreen" id="game-fullscreen" type="button" ${firstPlayable ? "" : "disabled"}>Fullscreen ⛶</button></div>
+        <div class="game-player-area" id="game-player-area">${firstPlayable ? `<iframe class="game-player-frame" id="game-player-frame" src="${esc(firstPlayable.gamePath)}" title="${esc(firstPlayable.title)} playable game" width="${width}" height="${height}" allow="autoplay; fullscreen; gamepad; clipboard-read; clipboard-write" allowfullscreen></iframe>` : `<div class="game-player-empty"><span class="game-empty-icon">${icon.gamepad}</span><h2>Choose a game to play</h2><p>Upload a WebGL build from the admin panel, then launch it here.</p></div>`}</div>
+      </div>
+    </section>
+  </main>`;
+}
+
+function aboutPage() {
+  return `<main id="main" class="page-main wrap"><header class="page-heading"><h1>${esc(copy.aboutTitleA)}<br /><span class="gradient-text">${esc(copy.aboutTitleB)}</span></h1><p class="about-lede">${esc(copy.aboutLead)}</p></header>
+    <section class="about-layout"><div class="about-story"><h2>${esc(copy.aboutStoryTitleA)}<br />${esc(copy.aboutStoryTitleB)}</h2><p>${esc(copy.aboutParagraph1)}</p><p>${esc(copy.aboutParagraph2)}</p>${copy.aboutParagraph3 ? `<p>${esc(copy.aboutParagraph3)}</p>` : ""}<a class="button button-violet" href="projects.html">${esc(copy.aboutButton)} ${icon.arrow}</a>${contactActions("about-contact-actions")}</div></section>
+  </main>`;
+}
+
+const pageContent = { home: homePage, projects: projectsPage, games: gamesPage, about: aboutPage };
+app.innerHTML = `${header(page)}${(pageContent[page] || homePage)()}${footer()}<dialog class="reel-dialog" aria-labelledby="dialog-title"><button class="dialog-close" type="button" aria-label="Close showreel details">×</button><span class="eyebrow">${esc(copy.dialogEyebrow)}</span><h2 id="dialog-title">${esc(copy.dialogTitle)}</h2><p>${esc(site.showreelUrl ? copy.showreelReady : copy.showreelMissing)}</p>${site.showreelUrl ? `<a class="button button-violet" href="${esc(site.showreelUrl)}" target="_blank" rel="noreferrer">${esc(copy.showreelAction)} ${icon.arrow}</a>` : `<a class="text-link" href="projects.html">${esc(copy.showreelBrowse)} ${icon.arrow}</a>`}</dialog>`;
+
+document.querySelectorAll(".email-copy-button").forEach((copyEmailButton) => copyEmailButton.addEventListener("click", async () => {
+  const email = copyEmailButton.dataset.email.trim();
+  const status = copyEmailButton.closest(".email-copy-wrap").querySelector(".email-copy-status");
+  if (!email) {
+    status.textContent = "Add your email in the admin panel first.";
+    status.classList.add("is-error");
+    copyEmailButton.setAttribute("aria-label", "Add an email address in the admin panel to enable copying");
+    window.setTimeout(() => { status.textContent = ""; status.classList.remove("is-error"); }, 3500);
+    return;
+  }
+  let copied = false;
+  try {
+    await navigator.clipboard.writeText(email);
+    copied = true;
+  } catch {
+    const field = document.createElement("textarea");
+    field.value = email;
+    field.setAttribute("readonly", "");
+    field.style.position = "fixed";
+    field.style.opacity = "0";
+    document.body.append(field);
+    field.select();
+    try { copied = document.execCommand("copy"); } catch { copied = false; }
+    field.remove();
+  }
+  if (copied) {
+    copyEmailButton.classList.add("is-copied");
+    copyEmailButton.setAttribute("aria-label", "Email address copied");
+    status.textContent = "Email address copied to clipboard.";
+    window.setTimeout(() => {
+      copyEmailButton.classList.remove("is-copied");
+      copyEmailButton.setAttribute("aria-label", "Copy email address");
+      status.textContent = "";
+    }, 2400);
+  } else {
+    status.textContent = `Could not copy. Email: ${email}`;
+    status.classList.add("is-error");
+    window.setTimeout(() => { status.textContent = ""; status.classList.remove("is-error"); }, 5000);
+  }
+}));
+
+function toggleProject(card) {
+  const group = card.closest(".work-group");
+  const willExpand = !card.classList.contains("is-expanded");
+  group.querySelectorAll(".project-card").forEach((item) => {
+    const open = willExpand && item === card;
+    const project = projects.find((entry) => entry.id === item.dataset.project);
+    item.classList.toggle("is-expanded", open);
+    item.querySelector(".project-trigger").setAttribute("aria-expanded", String(open));
+    item.querySelector(".expand-mark").textContent = open ? "−" : "+";
+    item.querySelector(".project-details").hidden = !open;
+    item.querySelector(".project-visual").classList.toggle("has-video", open && Boolean(youtubeEmbedUrl(project?.videoUrl)));
+    item.querySelector(".project-visual").classList.toggle("is-placeholder", open && !youtubeEmbedUrl(project?.videoUrl));
+    item.querySelector(".project-visual").innerHTML = project ? projectMedia(project, open) : "";
+  });
+}
+
+document.querySelectorAll(".project-card").forEach((card) => {
+  card.addEventListener("click", (event) => {
+    if (event.target.closest("a, button, iframe")) return;
+    toggleProject(card);
+  });
+  card.addEventListener("keydown", (event) => {
+    if (event.target !== card || !["Enter", " "].includes(event.key)) return;
+    event.preventDefault();
+    toggleProject(card);
+  });
+});
+
+document.querySelectorAll(".project-trigger").forEach((trigger) => {
+  trigger.addEventListener("click", () => toggleProject(trigger.closest(".project-card")));
+});
+
+function openProjectTarget(id, { updateUrl = true, scroll = true } = {}) {
+  const card = document.querySelector(`.project-card[data-project="${CSS.escape(id)}"]`);
+  if (!card) return false;
+  const group = card.closest(".work-group");
+  if (group?.hidden) {
+    const allFilter = document.querySelector('.filter-button[data-filter="all"]');
+    allFilter?.click();
+  }
+  if (!card.classList.contains("is-expanded")) toggleProject(card);
+  if (updateUrl) history.replaceState(null, "", `#project-${encodeURIComponent(id)}`);
+  if (scroll) card.scrollIntoView({ behavior: "smooth", block: "center" });
+  return true;
+}
+
+document.querySelectorAll("[data-project-target]").forEach((link) => {
+  link.addEventListener("click", (event) => {
+    const targetId = link.dataset.projectTarget;
+    if (!targetId) return;
+    const targetUrl = new URL(link.href, location.href);
+    if (targetUrl.pathname.endsWith("projects.html") && page === "projects") {
+      event.preventDefault();
+      openProjectTarget(targetId);
+    }
+  });
+});
+
+if (page === "projects") {
+  const targetId = decodeURIComponent(location.hash.match(/^#project-(.+)$/)?.[1] || "");
+  if (targetId) requestAnimationFrame(() => openProjectTarget(targetId, { updateUrl: false }));
+}
+
+document.querySelectorAll(".filter-button").forEach((button) => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".filter-button").forEach((item) => {
+      const active = item === button;
+      item.classList.toggle("active", active);
+      item.setAttribute("aria-pressed", String(active));
+    });
+    document.querySelectorAll(".projects-page-grid .work-group").forEach((group) => {
+      group.hidden = button.dataset.filter !== "all" && group.dataset.category !== button.dataset.filter;
+    });
+    document.querySelector(".projects-page-grid")?.classList.toggle("is-filtered", button.dataset.filter !== "all");
+  });
+});
+
+const menuToggle = document.querySelector(".menu-toggle");
+menuToggle?.addEventListener("click", () => {
+  const open = menuToggle.getAttribute("aria-expanded") !== "true";
+  menuToggle.setAttribute("aria-expanded", String(open));
+  document.querySelector(".primary-nav").classList.toggle("nav-open", open);
+});
+
+const arcade = document.querySelector("#game-arcade");
+const gameFrame = document.querySelector("#game-player-frame");
+function resizeGameFrame() {
+  const frame = document.querySelector("#game-player-frame");
+  const area = document.querySelector("#game-player-area");
+  if (!frame || !area) return;
+  const width = Number(frame.getAttribute("width")) || 1080;
+  const height = Number(frame.getAttribute("height")) || 1920;
+  const ratio = width / height;
+  const stage = document.querySelector("#game-stage");
+  const toolbar = stage?.querySelector(".game-stage-toolbar");
+  const fullscreen = document.fullscreenElement === stage;
+  if (fullscreen && stage) {
+    stage.style.width = "";
+    stage.style.flex = "";
+    arcade.style.width = "";
+  }
+  const pageBounds = document.querySelector(".games-page")?.getBoundingClientRect();
+  const drawer = document.querySelector("#game-drawer");
+  const mobileDrawer = matchMedia("(max-width: 760px)").matches;
+  let availableWidth;
+  let availableHeight;
+  if (fullscreen) {
+    availableWidth = stage.clientWidth;
+    availableHeight = stage.clientHeight - (toolbar?.offsetHeight || 0);
+  } else {
+    availableWidth = (pageBounds?.width || window.innerWidth) - (!mobileDrawer && arcade?.classList.contains("drawer-open") ? (drawer?.offsetWidth || 0) : 0) - 2;
+    availableHeight = Math.min(window.innerHeight * 0.72, 800) - (toolbar?.offsetHeight || 0);
+  }
+  const fittedWidth = Math.max(1, Math.min(availableWidth, availableHeight * ratio));
+  const fittedHeight = fittedWidth / ratio;
+  if (!fullscreen && stage && arcade) {
+    area.style.width = `${Math.floor(fittedWidth)}px`;
+    area.style.height = `${Math.floor(fittedHeight)}px`;
+    area.style.flex = "none";
+    stage.style.flex = "none";
+    stage.style.width = `${Math.floor(fittedWidth)}px`;
+    arcade.style.width = `${Math.floor(fittedWidth + (!mobileDrawer && arcade.classList.contains("drawer-open") ? (drawer?.offsetWidth || 0) : 0) + 2)}px`;
+  } else if (fullscreen) {
+    area.style.width = "100%";
+    area.style.height = "auto";
+    area.style.flex = "1";
+  }
+  frame.style.width = `${Math.floor(fittedWidth)}px`;
+  frame.style.height = `${Math.floor(fittedHeight)}px`;
+}
+function chooseGame(id) {
+  const game = projects.find((item) => item.id === id && item.gamePath);
+  if (!game) return;
+  let frame = document.querySelector("#game-player-frame");
+  if (!frame) {
+    document.querySelector("#game-player-area").innerHTML = `<iframe class="game-player-frame" id="game-player-frame" title="${esc(game.title)} playable game" allow="autoplay; fullscreen; gamepad; clipboard-read; clipboard-write" allowfullscreen></iframe>`;
+    frame = document.querySelector("#game-player-frame");
+  }
+  const width = Number(game.gameWidth) || 1080;
+  const height = Number(game.gameHeight) || 1920;
+  frame.setAttribute("width", String(width));
+  frame.setAttribute("height", String(height));
+  frame.title = `${game.title} playable game`;
+  if (frame.getAttribute("src") !== game.gamePath) frame.src = game.gamePath;
+  document.querySelector("#game-now-playing").textContent = game.title;
+  document.querySelectorAll(".game-choice").forEach((button) => {
+    const active = button.dataset.gameId === game.id;
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-pressed", String(active));
+  });
+  document.querySelector("#game-fullscreen").disabled = false;
+  resizeGameFrame();
+}
+const toggleGameDrawer = (open) => {
+  if (!arcade) return;
+  arcade.classList.toggle("drawer-open", open);
+  const button = document.querySelector("#game-menu-button");
+  button?.setAttribute("aria-expanded", String(open));
+  window.setTimeout(resizeGameFrame, 280);
+};
+document.querySelectorAll(".game-choice[data-game-id]").forEach((button) => {
+  button.addEventListener("click", () => chooseGame(button.dataset.gameId));
+});
+document.querySelector("#game-menu-button")?.addEventListener("click", () => toggleGameDrawer(!arcade.classList.contains("drawer-open")));
+document.querySelector("#game-drawer-close")?.addEventListener("click", () => toggleGameDrawer(false));
+document.querySelector("#game-fullscreen")?.addEventListener("click", async () => {
+  const stage = document.querySelector("#game-stage");
+  if (!stage || !document.querySelector("#game-player-frame")) return;
+  try {
+    if (document.fullscreenElement === stage) await document.exitFullscreen();
+    else await stage.requestFullscreen();
+  } catch { /* Fullscreen may be unavailable in some embedded contexts. */ }
+});
+document.addEventListener("fullscreenchange", () => {
+  const stage = document.querySelector("#game-stage");
+  const button = document.querySelector("#game-fullscreen");
+  if (button) button.textContent = document.fullscreenElement === stage ? "Exit fullscreen ⛶" : "Fullscreen ⛶";
+  window.requestAnimationFrame(resizeGameFrame);
+});
+window.addEventListener("resize", resizeGameFrame);
+if (gameFrame) resizeGameFrame();
+
+const dialog = document.querySelector(".reel-dialog");
+document.querySelector(".play-button")?.addEventListener("click", () => dialog.showModal());
+document.querySelector(".dialog-close")?.addEventListener("click", () => dialog.close());
+dialog?.addEventListener("click", (event) => {
+  if (event.target === dialog) dialog.close();
+});

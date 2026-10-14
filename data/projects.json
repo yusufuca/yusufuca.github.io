@@ -1,0 +1,220 @@
+[
+  {
+    "id": "sifb",
+    "title": "Super Interdimensional Fight Bonanza",
+    "category": "programming",
+    "image": "assets/sifb-game-thumb.png",
+    "alt": "Super Interdimensional Fight Bonanza game thumbnail",
+    "tags": [
+      "Unity",
+      "C#",
+      "Game Feel",
+      "Systems",
+      "3D",
+      "Fighting"
+    ],
+    "description": "A fast-paced 3D party fighting game where characters from different dimensions collide. Built around responsive controls, expressive combat and over-the-top game feel.",
+    "videoUrl": "",
+    "itchUrl": "https://yusemuca.itch.io/super-interdimensional-fight-bonanza",
+    "gamePath": "games/sifb/index.html",
+    "gameWidth": 1920,
+    "gameHeight": 1080,
+    "playable": true,
+    "links": [],
+    "subtitle": "DreamLayer GameJam 2026"
+  },
+  {
+    "id": "merge-fruit",
+    "title": "Merge Fruit Game",
+    "category": "programming",
+    "subtitle": "Unity / C# · Suika Game Clone",
+    "date": "2026-09-28",
+    "image": "assets/merge-fruit-game-thumb.jpg",
+    "alt": "Merge Fruit game thumbnail",
+    "tags": [
+      "Unity",
+      "C#"
+    ],
+    "description": "This project is a Suika Game clone built in Unity as a learning exercise, exploring 2D physics-based gameplay, data-driven design, and mobile input handling.",
+    "videoUrl": "https://www.youtube.com/embed/m5ObU97LYxE?si=VwPy3lUYZpZOh_cP",
+    "itchUrl": "",
+    "gamePath": "games/merge-fruit/index.html",
+    "gameWidth": 1080,
+    "gameHeight": 1920,
+    "playable": true,
+    "links": [
+      {
+        "label": "GitHub",
+        "url": "https://github.com/yusufuca/MergeFruits"
+      },
+      {
+        "label": "Devlog Playlist",
+        "url": "https://www.youtube.com/playlist?list=PLDA0TfM-tPBY"
+      }
+    ]
+  },
+  {
+    "id": "game-feel-systems",
+    "title": "A Study in Game Feel & Systems Architecture",
+    "category": "programming",
+    "subtitle": "Unity / C# / Game Feel & System Architecture",
+    "date": "2026-09-13",
+    "image": "",
+    "alt": "Gameplay systems architecture project artwork",
+    "tags": [
+      "Unity",
+      "C#",
+      "Game Feel & System Architecture"
+    ],
+    "description": "Built as a personal learning journey to dive deep into clean code principles, state machines, and the mechanics of game feel.",
+    "videoUrl": "https://www.youtube.com/embed/P7KOq5rkvFs?si=69s01fo-XmvBisNd",
+    "itchUrl": "",
+    "gamePath": "",
+    "playable": false,
+    "links": [
+      {
+        "label": "GitHub",
+        "url": "https://github.com/yusufuca/RogueLiteGameDemo/tree/main/Assets/_Scripts"
+      },
+      {
+        "label": "Devlog Playlist",
+        "url": "https://www.youtube.com/playlist?list=PLf5cfXFonNw8"
+      }
+    ]
+  },
+  {
+    "id": "16barlogic",
+    "title": "16barlogic — Adaptive Non-Linear Music System",
+    "category": "programming",
+    "subtitle": "Unity / C# / FMOD / State Machine Logic",
+    "date": "2026-07-26",
+    "image": "",
+    "alt": "16barlogic adaptive music project artwork",
+    "tags": [
+      "Unity",
+      "C#",
+      "FMOD",
+      "State Machine Logic"
+    ],
+    "description": "An interactive audio demo designed in Unity to showcase adaptive music implementation. By utilizing vertical layering and horizontal resequencing techniques, the system dynamically shifts musical stems and themes in response to changing gameplay states.\r\n\r\nDevelopment Note: All audio design, DSP calculations, and acoustic logic in this project were developed entirely by me. Surrounding gameplay elements (player movement, combat triggers) were AI-assisted to quickly build an interactive testbed for the audio systems — the focus here is the sound architecture. For a from-scratch implementation of gameplay systems, see my Roguelite Demo.",
+    "textLinks": [
+      {
+        "text": "Roguelite Demo",
+        "targetProjectId": "game-feel-systems"
+      }
+    ],
+    "videoUrl": "https://www.youtube.com/embed/L_-hf9b16jc?si=PrvzIM_zXwbdpuc-",
+    "itchUrl": "",
+    "gamePath": "",
+    "playable": false,
+    "links": [
+      {
+        "label": "GitHub",
+        "url": "https://github.com/yusufuca/16BarLogicGame"
+      }
+    ]
+  },
+  {
+    "id": "dsp-demo",
+    "title": "DSP-Demo — Procedural Acoustics & Occlusion Engine",
+    "category": "programming",
+    "subtitle": "Unity / C# / FMOD Middleware",
+    "date": "2026-07-25",
+    "image": "",
+    "alt": "Procedural acoustics project artwork",
+    "tags": [
+      "Unity",
+      "C#",
+      "FMOD Middleware"
+    ],
+    "description": "A runtime room acoustics and source occlusion system built in Unity and FMOD. Instead of relying on static, pre-placed trigger volumes, the core flood-fill algorithm and 6-axis raycasting dynamically detect room geometry, total volume, and material hardness every frame. These physical parameters are calculated in real-time and mapped directly into FMOD DSP parameters—specifically driving Reverb Time, Early/Late Delay, Diffusion, High Cut, and Low Gain. \r\n\r\nDevelopment Note: All audio design, DSP calculations, and acoustic logic in this project were developed entirely by me. Surrounding gameplay elements (player movement, combat triggers) were AI-assisted to quickly build an interactive testbed for the audio systems — the focus here is the sound architecture. For a from-scratch implementation of gameplay systems, see my Roguelite Demo.",
+    "textLinks": [
+      {
+        "text": "Roguelite Demo",
+        "targetProjectId": "game-feel-systems"
+      }
+    ],
+    "videoUrl": "https://www.youtube.com/embed/LngPSJwyw9E?si=DwSdHpwlpWW0_aAF",
+    "itchUrl": "",
+    "gamePath": "",
+    "playable": false,
+    "links": [
+      {
+        "label": "GitHub",
+        "url": "https://github.com/yusufuca/DSP-DEMO"
+      }
+    ]
+  },
+  {
+    "id": "god-of-war-audio",
+    "title": "God of War — Combat Audio Redesign",
+    "category": "audio",
+    "subtitle": "Sound Redesign",
+    "date": "2026-07-25",
+    "image": "",
+    "alt": "God of War combat audio redesign artwork",
+    "tags": [
+      "Audio",
+      "Sound Redesign"
+    ],
+    "description": "A linear sound redesign for a God of War combat sequence.\r\n\r\n\r\n\r\nNote: Source materials were curated from the GDC (Sonniss) Audio Archives.",
+    "videoUrl": "https://www.youtube.com/embed/yrkq4w5Wp58?si=C1kDiS21KeTL2twb",
+    "itchUrl": "",
+    "gamePath": "",
+    "playable": false,
+    "links": [
+      {
+        "label": "Sound Redesign Playlist",
+        "url": "https://www.youtube.com/playlist?list=PLUW7vY-X3rLQ"
+      }
+    ]
+  },
+  {
+    "id": "dark-souls-audio",
+    "title": "Dark Souls 3: Abyss Watchers - Cinematic Sound Redesign",
+    "category": "audio",
+    "subtitle": "Sound Redesign",
+    "date": "2026-07-31",
+    "image": "",
+    "alt": "Dark Souls 3 cinematic sound redesign artwork",
+    "tags": [
+      "Audio",
+      "Sound Redesign"
+    ],
+    "description": "A linear sound redesign for the Abyss Watchers cinematic in Dark Souls 3.\r\n\r\nNote: Source materials were curated from the GDC (Sonniss) Audio Archives.",
+    "videoUrl": "https://www.youtube.com/embed/1H62ik3NMT8?si=Sb_9a59pkTCwEe_X",
+    "itchUrl": "",
+    "gamePath": "",
+    "playable": false,
+    "links": [
+      {
+        "label": "Sound Redesign Playlist",
+        "url": "https://www.youtube.com/playlist?list=PLUW7vY-X3rLQ"
+      }
+    ]
+  },
+  {
+    "id": "stardew-audio",
+    "title": "Stardew Valley - SOUND REDESIGN",
+    "category": "audio",
+    "subtitle": "Sound Redesign",
+    "date": "2026-07-31",
+    "image": "",
+    "alt": "Stardew Valley sound redesign artwork",
+    "tags": [
+      "Audio",
+      "Sound Redesign"
+    ],
+    "description": "A linear sound redesign for Stardew Valley's harvesting and wood-chopping mechanics.\r\n\r\nNote: Source materials were curated from the GDC (Sonniss) Audio Archives.",
+    "videoUrl": "https://www.youtube.com/embed/HvNN7jzqtrU?si=Fvw5vAwc9cyid_4B",
+    "itchUrl": "",
+    "gamePath": "",
+    "playable": false,
+    "links": [
+      {
+        "label": "Sound Redesign Playlist",
+        "url": "https://www.youtube.com/playlist?list=PLUW7vY-X3rLQ"
+      }
+    ]
+  }
+]

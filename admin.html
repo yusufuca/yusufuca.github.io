@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#071222" />
+    <title>Portfolio Admin — Yusuf Semih Uca</title>
+    <link rel="stylesheet" href="admin.css" />
+    <script src="admin.js" type="module"></script>
+  </head>
+  <body>
+    <header class="admin-header">
+      <a class="brand" href="/index.html"><span>Yusuf Semih Uca</span><small>Portfolio admin</small></a>
+      <div class="header-actions"><span class="local-badge"><i></i> Local on this PC</span><a href="/index.html" target="_blank" rel="noreferrer">Open portfolio ↗</a></div>
+    </header>
+    <main class="admin-shell">
+      <section class="intro">
+        <span class="eyebrow">CONTENT EDITOR</span>
+        <h1>Keep your portfolio <span>up to date.</span></h1>
+        <p>Choose a section below. Changes save directly to your local project files.</p>
+      </section>
+      <nav class="admin-tabs" role="tablist" aria-label="Admin sections">
+        <button id="tab-projects" class="admin-tab active" type="button" role="tab" aria-selected="true" aria-controls="panel-projects" data-admin-tab="projects">Projects</button>
+        <button id="tab-profile" class="admin-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-profile" data-admin-tab="profile">Profile</button>
+        <button id="tab-copy" class="admin-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-copy" data-admin-tab="copy">Website text</button>
+      </nav>
+      <section id="panel-projects" class="admin-panel" role="tabpanel" aria-labelledby="tab-projects">
+      <div class="workspace">
+        <aside class="project-sidebar">
+          <div class="sidebar-title"><div><span class="eyebrow">YOUR CONTENT</span><h2>Projects</h2></div><button id="add-project" class="icon-button" type="button" aria-label="Add a project">+</button></div>
+          <label class="filter-label" for="project-filter">Show</label>
+          <select id="project-filter"><option value="all">All projects</option><option value="programming">Game programming</option><option value="audio">Game audio</option></select>
+          <div id="project-list" class="project-list" aria-live="polite"></div>
+        </aside>
+        <section class="editor-panel" aria-labelledby="editor-title">
+          <div class="editor-heading"><div><span class="eyebrow">PROJECT DETAILS</span><h2 id="editor-title">Select a project</h2></div><button id="delete-project" class="danger-button" type="button" hidden>Delete project</button></div>
+          <form id="project-form" hidden>
+            <div class="form-grid">
+              <label class="wide">Project title<input name="title" required maxlength="100" placeholder="Project name" /></label>
+              <label>Category<select name="category"><option value="programming">Game programming</option><option value="audio">Game audio</option></select></label>
+              <label>Project ID<input name="id" required pattern="[a-z0-9-]+" maxlength="64" placeholder="lowercase-id" /><small>Lowercase letters, numbers and hyphens.</small></label>
+              <label>Subtitle<input name="subtitle" maxlength="120" placeholder="Unity / C# / FMOD" /></label><label>Project date<input name="date" type="date" /></label>
+              <label class="wide">Short description<textarea name="description" id="project-description" rows="4" maxlength="600" placeholder="What did you build or explore?"></textarea><small>Select a phrase in the text to make it link to another project.</small></label>
+              <div class="wide text-link-editor"><div class="text-link-editor-heading"><strong>Clickable text</strong><small>Highlight a phrase above, choose its destination, then add it.</small></div><div class="text-link-editor-controls"><select id="text-link-target" aria-label="Linked project destination"><option value="">Choose destination project</option></select><button id="add-text-link" class="secondary-button" type="button">Link selected text</button></div><div id="text-link-list" class="text-link-list" aria-live="polite"><span class="text-link-empty">No linked phrases yet.</span></div></div>
+              <label class="wide">Tags<input name="tags" placeholder="Unity, C#, Game Feel" /><small>Separate tags with commas.</small></label>
+              <label>Image path<input name="image" placeholder="assets/my-game.svg" /></label>
+              <label>Image alt text<input name="alt" maxlength="180" placeholder="Describe the image" /></label>
+              <label class="wide">YouTube video URL<input name="videoUrl" type="url" placeholder="https://www.youtube.com/watch?v=..." /><small>Paste a regular YouTube share link. It appears in place of the thumbnail when the project opens.</small></label>
+              <label class="wide">itch.io game URL<input name="itchUrl" type="url" placeholder="https://your-name.itch.io/game" /><small>Saved with the project. Uploaded WebGL builds play in the Games page.</small></label>
+              <label class="check-row wide"><input name="playable" type="checkbox" /><span><strong>Playable</strong><small>Show this project in the Games page game list.</small></span></label>
+              <div class="wide game-upload"><label class="wide" for="game-zip">WebGL build ZIP<input id="game-zip" type="file" accept=".zip,application/zip" /></label><div class="resolution-inputs"><label for="game-width">Game width (px)<input id="game-width" name="gameWidth" type="number" min="240" max="7680" step="1" value="1080" required /></label><label for="game-height">Game height (px)<input id="game-height" name="gameHeight" type="number" min="240" max="7680" step="1" value="1920" required /></label></div><small>Enter the build’s original resolution. The site scales the iframe to fit the available space while keeping this aspect ratio. The ZIP should contain the game’s <code>index.html</code>.</small><button id="upload-game" class="secondary-button" type="button">Upload WebGL build</button><span id="upload-status" class="save-status" role="status"></span></div>
+              <label class="wide">Other project links<textarea name="links" rows="3" placeholder="Source code | https://github.com/...&#10;Watch video | https://youtube.com/..."></textarea><small>One link per line, in the format: label | URL</small></label>
+            </div>
+            <div class="editor-actions"><button class="primary-button" type="submit">Save project</button><span id="project-status" class="save-status" role="status"></span></div>
+          </form>
+          <div id="empty-state" class="empty-state"><span class="empty-mark">✦</span><h3>Choose a project to edit</h3><p>Or add a new project to start building your list.</p></div>
+        </section>
+      </div>
+      </section>
+      <section class="site-settings admin-panel" id="panel-profile" role="tabpanel" aria-labelledby="tab-profile" hidden>
+        <div class="editor-heading"><div><span class="eyebrow">PROFILE</span><h2>Site settings</h2></div></div>
+        <form id="site-form">
+          <div class="form-grid">
+            <label>Name<input name="name" required maxlength="80" /></label>
+            <label>Role<input name="role" maxlength="80" /></label>
+            <label>Email<input name="email" type="email" placeholder="you@example.com" /></label>
+            <label>Showreel URL<input name="showreelUrl" type="url" placeholder="https://youtube.com/..." /></label>
+            <label>CV file path<input name="cvUrl" type="text" placeholder="assets/yusuf-semih-uca-cv.pdf" /><small>Use a path relative to the website folder.</small></label>
+            <label>GitHub URL<input name="github" type="url" placeholder="https://github.com/username" /></label>
+            <label>LinkedIn URL<input name="linkedin" type="url" placeholder="https://linkedin.com/in/username" /></label>
+            <label>itch.io profile URL<input name="itch" type="url" placeholder="https://username.itch.io" /></label>
+            <label>YouTube URL<input name="youtube" type="url" placeholder="https://youtube.com/@username" /></label>
+          </div>
+          <div class="editor-actions"><button class="primary-button" type="submit">Save site settings</button><span id="site-status" class="save-status" role="status"></span></div>
+        </form>
+      </section>
+      <section class="site-settings copy-settings admin-panel" id="panel-copy" role="tabpanel" aria-labelledby="tab-copy" hidden>
+        <div class="editor-heading"><div><span class="eyebrow">PAGE CONTENT</span><h2>Website text</h2></div></div>
+        <p class="copy-intro">Edit the visible copy across Home, Projects, Games and About. Separate skill and focus-area items with commas.</p>
+        <form id="copy-form">
+          <details class="copy-section"><summary>Navigation</summary>
+          <div class="form-grid">
+            <label>Home link<input name="navHome" maxlength="30" /></label><label>Projects link<input name="navProjects" maxlength="30" /></label>
+            <label>Games link<input name="navGames" maxlength="30" /></label><label>About link<input name="navAbout" maxlength="30" /></label><label>Contact button<input name="navTalk" maxlength="40" /></label>
+          </div></details>
+          <details class="copy-section" open><summary>Home</summary>
+          <div class="form-grid">
+            <label class="wide">Hero eyebrow<input name="heroEyebrow" maxlength="120" /></label>
+            <label>Headline — first line<input name="heroTitleA" maxlength="80" /></label><label>Headline — gradient line<input name="heroTitleB" maxlength="80" /></label>
+            <label class="wide">Intro paragraph<textarea name="heroLead" rows="2" maxlength="300"></textarea></label>
+            <label>Work button<input name="heroButton" maxlength="60" /></label><label>About button<input name="heroAboutButton" maxlength="60" /></label><label>Skill tags<input name="skills" maxlength="200" /><small>Comma-separated.</small></label>
+            <label>Showreel label<input name="showreelTitle" maxlength="60" /></label><label>Showreel top caption<input name="showreelSubtitle" maxlength="60" /></label>
+            <label>Showreel footer<input name="showreelFooter" maxlength="100" /></label><label>Showreel note<input name="showreelNote" maxlength="180" /></label>
+            <label class="wide">Work section title<input name="workTitle" maxlength="100" /></label><label>Work section eyebrow<input name="workEyebrow" maxlength="60" /></label>
+            <label class="wide">Work section description<textarea name="workDescription" rows="2" maxlength="240"></textarea></label>
+            <label>Programming section title<input name="programmingTitle" maxlength="80" /></label><label>Audio section title<input name="audioTitle" maxlength="80" /></label>
+            <label>Programming subtitle<textarea name="programmingDescription" rows="2" maxlength="180"></textarea></label><label>Audio subtitle<textarea name="audioDescription" rows="2" maxlength="180"></textarea></label>
+          </div></details>
+          <details class="copy-section"><summary>Projects and Games pages</summary>
+          <div class="form-grid">
+            <label>Projects eyebrow<input name="projectsEyebrow" maxlength="60" /></label><label>Games eyebrow<input name="gamesEyebrow" maxlength="60" /></label>
+            <label>Projects title — first line<input name="projectsTitleA" maxlength="80" /></label><label>Projects title — gradient line<input name="projectsTitleB" maxlength="80" /></label>
+            <label class="wide">Projects intro<textarea name="projectsDescription" rows="2" maxlength="240"></textarea></label>
+            <label>Programming group subtitle<input name="projectsProgrammingDescription" maxlength="160" /></label><label>Audio group subtitle<input name="projectsAudioDescription" maxlength="160" /></label>
+            <label>All filter label<input name="filterAll" maxlength="40" /></label><label>Programming filter label<input name="filterProgramming" maxlength="50" /></label><label>Audio filter label<input name="filterAudio" maxlength="50" /></label>
+            <label>Games title — first line<input name="gamesTitleA" maxlength="80" /></label><label>Games title — gradient line<input name="gamesTitleB" maxlength="80" /></label>
+            <label class="wide">Games intro<textarea name="gamesDescription" rows="2" maxlength="240"></textarea></label>
+            <label>When a game is playable — heading<input name="gamesReadyTitle" maxlength="80" /></label><label>When no game is linked — heading<input name="gamesEmptyTitle" maxlength="80" /></label>
+            <label>Playable games description<textarea name="gamesReadyDescription" rows="2" maxlength="180"></textarea></label><label>No games description<textarea name="gamesEmptyDescription" rows="2" maxlength="180"></textarea></label>
+            <label>Explore projects button<input name="gamesExplore" maxlength="60" /></label><label>Play button<input name="gamesPlay" maxlength="40" /></label><label>itch.io button<input name="gamesItch" maxlength="50" /></label>
+            <label>Game label<input name="gameProjectLabel" maxlength="40" /></label><label>Unlinked game label<input name="gameShowcaseLabel" maxlength="40" /></label>
+          </div></details>
+          <details class="copy-section"><summary>About</summary>
+          <div class="form-grid">
+            <label>Eyebrow<input name="aboutEyebrow" maxlength="60" /></label><label>Intro line<input name="aboutLead" maxlength="120" /></label>
+            <label>Headline — first line<input name="aboutTitleA" maxlength="80" /></label><label>Headline — gradient line<input name="aboutTitleB" maxlength="80" /></label>
+            <label>Story eyebrow<input name="aboutStoryEyebrow" maxlength="60" /></label><label>Story title — first line<input name="aboutStoryTitleA" maxlength="80" /></label>
+            <label>Story title — second line<input name="aboutStoryTitleB" maxlength="80" /></label><label>Story button<input name="aboutButton" maxlength="60" /></label>
+            <label class="wide">About paragraph 1<textarea name="aboutParagraph1" rows="3" maxlength="800"></textarea></label><label class="wide">About paragraph 2<textarea name="aboutParagraph2" rows="3" maxlength="800"></textarea></label>
+            <label class="wide">About paragraph 3<textarea name="aboutParagraph3" rows="3" maxlength="800"></textarea></label><label class="wide">About paragraph 4<textarea name="aboutParagraph4" rows="3" maxlength="800"></textarea></label>
+            <label>Focus section heading<input name="focusEyebrow" maxlength="60" /></label><label>Focus areas<input name="focusAreas" maxlength="240" /><small>Comma-separated.</small></label>
+            <label>Principles heading<input name="principlesEyebrow" maxlength="60" /></label><label>Principles text<textarea name="principlesText" rows="3" maxlength="500"></textarea></label>
+          </div></details>
+          <details class="copy-section"><summary>Footer and dialogs</summary>
+          <div class="form-grid">
+            <label>Footer eyebrow<input name="footerEyebrow" maxlength="60" /></label><label>Footer first line<input name="footerTitleA" maxlength="80" /></label>
+            <label>Footer gradient line<input name="footerTitleB" maxlength="80" /></label><label>Footer contact button<input name="footerEmailButton" maxlength="50" /></label>
+            <label class="wide">Footer description<textarea name="footerDescription" rows="2" maxlength="180"></textarea></label>
+            <label>Footer note<input name="footerNote" maxlength="120" /></label><label>About link label<input name="footerAbout" maxlength="50" /></label>
+            <label>CV download button<input name="cvButton" maxlength="40" /></label>
+            <label>Missing contact hint<input name="contactMissing" maxlength="100" /></label><label>Dialog eyebrow<input name="dialogEyebrow" maxlength="40" /></label>
+            <label>Dialog heading<input name="dialogTitle" maxlength="80" /></label><label>Dialog ready text<input name="showreelReady" maxlength="120" /></label>
+            <label>Dialog missing showreel text<input name="showreelMissing" maxlength="160" /></label><label>Dialog video button<input name="showreelAction" maxlength="50" /></label><label>Dialog projects button<input name="showreelBrowse" maxlength="50" /></label>
+          </div></details>
+          <div class="editor-actions"><button class="primary-button" type="submit">Save website text</button><span id="copy-status" class="save-status" role="status"></span></div>
+        </form>
+      </section>
+      <p class="local-note"><strong>Local editor:</strong> this panel is served only from your computer. It is intentionally excluded from the public <code>dist/</code> folder.</p>
+    </main>
+  </body>
+</html>
