@@ -52,7 +52,7 @@ p{color:var(--muted)}
 .button-yellow{background:linear-gradient(180deg,#b78b38,#936d24);color:#121629;box-shadow:0 0 24px rgba(161,120,40,.1)}
 
 .hero{display:grid;grid-template-columns:.92fr 1.08fr;gap:clamp(48px,7vw,105px);align-items:center;padding:22px 0 72px}
-.hero-copy{padding-left:clamp(0px,8vw,110px)}
+.hero-copy{padding-left:0}
 .hero-copy .eyebrow{margin-bottom:17px}
 .hero-copy h1{max-width:620px;font-size:clamp(3.6rem,6.5vw,6rem)}
 .hero-lede{max-width:570px;color:#d2dced;font-size:1.08rem;line-height:1.6;margin:0 0 18px}
@@ -240,7 +240,7 @@ to{opacity:1;transform:translateY(0)}
 .brand-role{font-size:.55rem}
 .menu-toggle{display:flex;flex-direction:column;gap:4px;justify-content:center;align-items:center;width:42px;height:42px;border:1px solid rgba(96,130,187,.42);border-radius:11px;background:rgba(9,20,39,.94);cursor:pointer}
 .menu-toggle>span:not(.sr-only){height:2px;width:18px;border-radius:2px;background:#e9f0fd}
-.primary-nav{display:none;position:absolute;top:72px;left:0;right:0;padding:14px;border:1px solid rgba(82,123,193,.42);border-radius:14px;background:#0b1830;box-shadow:0 14px 35px rgba(0,0,0,.4)}
+.primary-nav{display:none;position:absolute;top:72px;left:0;right:0;padding:14px;border:1px solid rgba(82,123,193,.42);border-radius:14px;background:rgba(0,0,0,.97);backdrop-filter:blur(22px) saturate(150%);-webkit-backdrop-filter:blur(22px) saturate(150%);box-shadow:0 14px 35px rgba(0,0,0,.4)}
 .primary-nav.nav-open{display:grid;gap:0}
 .primary-nav a{padding:12px 9px}
 .primary-nav a.active:after{left:9px;right:auto;width:27px;bottom:6px}
@@ -398,3 +398,11 @@ to{opacity:1;transform:translateY(0)}
 .game-stage:fullscreen{display:grid;place-items:center;width:100vw;height:100vh;height:100dvh;max-width:none;max-height:none;background:#040a12}
 .game-stage:fullscreen .game-player-area{width:100%;height:100%;flex:none}
 @media(max-width:760px){.game-edge-trigger{top:50%;width:37px;height:82px}.game-edge-trigger:hover,.game-edge-trigger:focus-visible{width:45px}.game-start-screen{padding:15px 12px}.game-start-grid{grid-template-columns:repeat(auto-fit,minmax(min(210px,100%),1fr));gap:10px}.game-launch-choice>span{font-size:.82rem}.game-fullscreen{right:8px;bottom:8px;width:36px;height:36px;min-height:36px}}
+
+/* Keep the footer at the viewport bottom on short pages, after content on long pages. */
+#app{display:flex;min-height:100vh;flex-direction:column}
+@supports (min-height:100dvh){#app{min-height:100dvh}}
+#app>main{flex:1 0 auto}
+#app>.site-footer{width:100%;flex:0 0 auto;margin-top:auto}
+.site-footer .footer-inner{width:100%;max-width:none;margin:0;padding:0}
+.site-footer .footer-bottom{width:100%;padding:22px clamp(24px,3vw,48px);border-top:0}
