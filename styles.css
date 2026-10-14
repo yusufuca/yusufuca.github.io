@@ -400,9 +400,9 @@ to{opacity:1;transform:translateY(0)}
 @media(max-width:760px){.game-edge-trigger{top:50%;width:37px;height:82px}.game-edge-trigger:hover,.game-edge-trigger:focus-visible{width:45px}.game-start-screen{padding:15px 12px}.game-start-grid{grid-template-columns:repeat(auto-fit,minmax(min(210px,100%),1fr));gap:10px}.game-launch-choice>span{font-size:.82rem}.game-fullscreen{right:8px;bottom:8px;width:36px;height:36px;min-height:36px}}
 
 /* Keep the footer at the viewport bottom on short pages, after content on long pages. */
-#app{display:flex;min-height:100vh;flex-direction:column}
+#app{display:grid;grid-template-rows:auto 1fr auto;min-height:100vh}
 @supports (min-height:100dvh){#app{min-height:100dvh}}
-#app>main{flex:1 0 auto}
-#app>.site-footer{width:100%;flex:0 0 auto;margin-top:auto}
+#app>main{min-width:0}
+#app>.site-footer{width:100%;margin-top:0}
 .site-footer .footer-inner{width:100%;max-width:none;margin:0;padding:0}
 .site-footer .footer-bottom{width:100%;padding:22px clamp(24px,3vw,48px);border-top:0}

@@ -210,7 +210,7 @@ function gamesPage() {
   const width = Number(firstPlayable?.gameWidth) || 1080;
   const height = Number(firstPlayable?.gameHeight) || 1920;
   return `<main id="main" class="games-page wrap">
-    <header class="games-heading"><h1>${esc(copy.gamesTitleA)} <span class="gradient-text">${esc(copy.gamesTitleB)}</span></h1></header>
+    <header class="games-heading"><h1 id="games-page-title">${firstPlayable ? esc(firstPlayable.title) : `${esc(copy.gamesTitleA)} <span class="gradient-text">${esc(copy.gamesTitleB)}</span>`}</h1></header>
     <section class="game-arcade" id="game-arcade" aria-label="Playable games">
       <aside class="game-drawer" id="game-drawer" aria-label="Game list">
         <div class="game-drawer-heading"><div><h2>Choose a game</h2></div><button class="game-drawer-close" id="game-drawer-close" type="button" aria-label="Close game list">×</button></div>
@@ -429,6 +429,8 @@ function chooseGame(id) {
   if (frame.getAttribute("src") !== game.gamePath) frame.src = game.gamePath;
   const nowPlaying = document.querySelector("#game-now-playing");
   if (nowPlaying) nowPlaying.textContent = game.title;
+  const pageTitle = document.querySelector("#games-page-title");
+  if (pageTitle) pageTitle.textContent = game.title;
   document.querySelectorAll(".game-choice").forEach((button) => {
     const active = button.dataset.gameId === game.id;
     button.classList.toggle("active", active);
