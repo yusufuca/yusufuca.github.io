@@ -324,9 +324,9 @@ to{opacity:1;transform:translateY(0)}
 /* Games player */
 .games-page{padding-top:28px;padding-bottom:54px}
 .games-heading{display:block;margin:4px 0 22px}
-.games-heading h1{margin:7px 0 0;font-size:clamp(2.1rem,4vw,3.5rem);line-height:1.06}
+.games-heading h1{margin:0;font-size:clamp(2.1rem,4vw,3.5rem);line-height:1.06}
 .game-arcade{position:relative;display:flex;height:min(72vh,800px);min-height:500px;overflow:hidden;border:1px solid rgba(53,101,155,.45);border-radius:19px;background:linear-gradient(140deg,#081629,#050c17);box-shadow:0 24px 60px rgba(0,0,0,.28)}
-.game-drawer{position:relative;z-index:2;display:flex;flex:0 0 auto;flex-direction:column;width:0;overflow:hidden;visibility:hidden;opacity:0;transform:translateX(-22px);padding:0;border-right:1px solid transparent;background:linear-gradient(180deg,#0b1a2d,#081321);transition:width .28s ease,transform .28s ease,opacity .22s ease,padding .28s ease,visibility .28s}
+.game-drawer{position:absolute;inset:0 auto 0 0;z-index:2;display:flex;flex-direction:column;width:0;overflow:hidden;visibility:hidden;opacity:0;transform:translateX(-22px);padding:0;border-right:1px solid transparent;background:linear-gradient(180deg,#0b1a2d,#081321);transition:width .28s ease,transform .28s ease,opacity .22s ease,padding .28s ease,visibility .28s}
 .game-arcade.drawer-open .game-drawer{width:min(310px,34%);visibility:visible;opacity:1;transform:translateX(0);padding:19px 14px;border-right-color:rgba(71,116,161,.28)}
 .game-drawer-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 4px 13px;border-bottom:1px solid rgba(73,111,152,.2)}
 .game-drawer-heading h2{margin:4px 0 0;font-size:1.18rem}
@@ -343,7 +343,7 @@ to{opacity:1;transform:translateY(0)}
 .game-choice-mark{color:#9dc9dc;font-size:1.35rem}
 .game-project-link{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 4px 2px;border-top:1px solid rgba(73,111,152,.2);color:#a8c6d6;font-size:.75rem}
 .game-project-link svg{width:18px;height:18px}
-.game-stage{display:flex;min-width:0;min-height:0;flex:1;flex-direction:column}
+.game-stage{display:flex;min-width:0;min-height:0;flex:1;flex-direction:column;margin-left:min(310px,34vw)}
 .game-stage-toolbar{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px;min-height:54px;padding:8px 13px;border-bottom:1px solid rgba(62,101,145,.24);background:rgba(8,20,34,.8)}
 .game-menu-button,.game-fullscreen{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:34px;padding:0 11px;border:1px solid rgba(67,112,157,.38);border-radius:9px;background:rgba(14,32,53,.92);color:#dce8f6;font-size:.72rem;white-space:nowrap;cursor:pointer}
 .game-menu-button:hover,.game-fullscreen:hover:not(:disabled){background:#18324e}
@@ -356,16 +356,45 @@ to{opacity:1;transform:translateY(0)}
 .game-empty-icon svg{width:30px;height:30px;fill:currentColor}
 .game-player-empty h2{margin:18px 0 7px;font-size:1.4rem}
 .game-player-empty p{margin:0;font-size:.84rem}
-@media(max-width:760px){.games-page{padding-top:21px;padding-bottom:38px}.games-heading{display:block;margin-bottom:17px}.games-heading h1{font-size:clamp(2rem,8vw,3rem)}.games-heading p{margin-top:9px;font-size:.8rem}.game-arcade{border-radius:14px}.game-arcade.drawer-open .game-drawer{position:absolute;inset:0 auto 0 0;width:min(82vw,310px);padding:15px 11px;box-shadow:18px 0 40px rgba(0,0,0,.38)}.game-drawer{position:absolute;inset:0 auto 0 0}.game-stage-toolbar{min-height:48px;gap:7px;padding:7px}.game-menu-button,.game-fullscreen{min-height:32px;padding:0 8px;font-size:.65rem}.game-now-playing{font-size:.67rem}.game-choice{grid-template-columns:54px minmax(0,1fr) auto;gap:8px}.game-choice img{width:54px;height:42px}}
+@media(max-width:760px){.games-page{padding-top:21px;padding-bottom:38px}.games-heading{display:block;margin-bottom:17px}.games-heading h1{font-size:clamp(2rem,8vw,3rem)}.games-heading p{margin-top:9px;font-size:.8rem}.game-arcade{border-radius:14px}.game-arcade.drawer-open .game-drawer{width:min(82vw,310px);padding:15px 11px;box-shadow:18px 0 40px rgba(0,0,0,.38)}.game-stage{margin-left:0}.game-stage-toolbar{min-height:48px;gap:7px;padding:7px}.game-menu-button,.game-fullscreen{min-height:32px;padding:0 8px;font-size:.65rem}.game-now-playing{font-size:.67rem}.game-choice{grid-template-columns:54px minmax(0,1fr) auto;gap:8px}.game-choice img{width:54px;height:42px}}
 @media(max-width:420px){.game-arcade.drawer-open .game-drawer{width:min(88vw,300px)}.game-stage-toolbar{grid-template-columns:auto minmax(0,1fr) auto;gap:5px;padding:6px}.game-menu-button,.game-fullscreen{padding:0 6px;font-size:.58rem}}
 
 .game-stage:fullscreen{width:100vw;height:100vh;height:100dvh;max-width:none;max-height:none;background:#040a12}.game-stage:fullscreen .game-player-area{min-height:0}
-.game-arcade.drawer-open .game-drawer{width:min(310px,34vw)}
 
-/* Keep the non-fullscreen player wrapper fitted to the build's own resolution. */
-.game-arcade{height:auto;min-height:0;max-width:100%;margin-inline:auto}
-.game-stage{flex:0 0 auto}
-.game-player-area{flex:0 0 auto;padding:0;background:#040a12}
+/* The game list overlays from the left; it never changes the centered player layout. */
+.game-arcade{display:block;width:100%;height:auto;min-height:0;max-width:100%;margin-inline:auto;overflow:visible;border:0;border-radius:0;background:none;box-shadow:none}
+.game-drawer{position:fixed;inset:102px auto 0 0;z-index:25;display:flex;flex-direction:column;width:min(320px,86vw);min-width:0;padding:18px 14px;overflow:hidden;border:1px solid rgba(121,151,184,.22);border-left:0;border-radius:0 0 16px 0;background:rgba(2,7,14,.9);box-shadow:18px 12px 42px rgba(0,0,0,.44);backdrop-filter:blur(18px) saturate(120%);-webkit-backdrop-filter:blur(18px) saturate(120%);transform:translateX(-105%);opacity:0;visibility:hidden;pointer-events:none;transition:transform .28s ease,opacity .22s ease,visibility .28s}
+.game-arcade.drawer-open .game-drawer{transform:translateX(0);opacity:1;visibility:visible;pointer-events:auto}
+.game-drawer-heading{padding-bottom:13px}
+.game-stage{display:flex;flex-direction:column;width:100%;min-width:0;min-height:0;margin:0 auto;overflow:hidden;border:1px solid rgba(53,101,155,.45);border-radius:14px;background:linear-gradient(140deg,#081629,#050c17)}
+.game-player-area{flex:0 0 auto;width:100%;padding:0;background:#040a12}
 .game-player-frame{max-width:none;max-height:none}
-@media(max-width:760px){.game-arcade{height:auto;min-height:0}}
-@media(max-width:420px){.game-arcade{height:auto;min-height:0}}
+@media(max-width:760px){.game-drawer{inset:84px auto 0 0;width:min(310px,88vw);padding:15px 11px;border-radius:0 0 14px 0}.game-stage{width:100%}}
+@media(max-width:420px){.game-arcade{height:auto;min-height:0}.game-drawer{width:min(300px,88vw)}}
+
+/* Keep only the playable canvas visible; controls sit on top of the game. */
+.game-stage{position:relative;display:block;height:auto;min-height:0;border:0;border-radius:0;background:transparent;box-shadow:none}
+.game-player-area{position:relative;display:grid;place-items:center;width:100%;height:auto;min-height:0;overflow:hidden;padding:0;background:transparent}
+.game-player-frame{border:0;border-radius:0;background:transparent;box-shadow:none}
+.game-fullscreen{position:absolute;right:10px;bottom:10px;z-index:3;display:grid;width:38px;height:38px;min-height:38px;padding:0;place-items:center;border:1px solid rgba(255,255,255,.46);border-radius:10px;background:rgba(0,0,0,.52);color:#fff;font-size:1.35rem;line-height:1;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.game-fullscreen:hover:not(:disabled){background:rgba(0,0,0,.76)}
+.game-edge-trigger{position:fixed;inset:102px auto 0 0;z-index:24;width:16px;min-height:0;padding:0;border:0;border-radius:0;background:transparent;cursor:pointer}
+.game-edge-trigger{top:50%;bottom:auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;width:43px;height:96px;border:1px solid rgba(121,151,184,.3);border-left:0;border-radius:0 13px 13px 0;background:rgba(1,5,10,.88);color:#d7e2ef;box-shadow:8px 8px 26px rgba(0,0,0,.3);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transform:translateY(-50%);transition:width .18s,background .18s,border-color .18s}
+.game-edge-trigger:hover,.game-edge-trigger:focus-visible{width:51px;border-color:rgba(100,183,205,.65);background:rgba(2,10,18,.97)}
+.game-edge-arrow{font-size:1.5rem;line-height:1;color:#8dc8d8}
+.game-edge-label{font-size:.61rem;font-weight:750;letter-spacing:.12em;writing-mode:vertical-rl;transform:rotate(180deg)}
+.game-start-screen{width:min(100%,980px);margin:0 auto;padding:clamp(16px,3vw,32px)}
+.game-start-heading{margin-bottom:16px;text-align:center}
+.game-start-heading h2{margin:0;font-size:clamp(1.2rem,2.3vw,1.65rem)}
+.game-start-heading p{margin:5px 0 0;color:#9db0c7;font-size:.82rem}
+.game-start-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:14px}
+.game-launch-choice{position:relative;display:flex;flex-direction:column;gap:0;overflow:hidden;padding:0;border:1px solid rgba(67,112,157,.42);border-radius:13px;background:rgba(7,17,29,.84);color:#edf3fc;text-align:left;cursor:pointer;transition:transform .18s,border-color .18s,box-shadow .18s}
+.game-launch-choice:hover,.game-launch-choice:focus-visible{transform:translateY(-3px);border-color:rgba(110,196,214,.85);box-shadow:0 12px 30px rgba(0,0,0,.28)}
+.game-launch-choice img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:#080d14}
+.game-launch-choice>span{padding:12px 13px 14px;font-size:.9rem;font-weight:720}
+.game-launch-choice>b{position:absolute;right:10px;bottom:9px;padding:6px 8px;border:1px solid rgba(134,188,210,.28);border-radius:7px;background:rgba(1,8,15,.78);color:#b7d9e5;font-size:.66rem;font-weight:650}
+.game-fullscreen:disabled{display:none}
+.game-edge-trigger:focus-visible{outline:2px solid #55aaff;outline-offset:-2px}
+.game-stage:fullscreen{display:grid;place-items:center;width:100vw;height:100vh;height:100dvh;max-width:none;max-height:none;background:#040a12}
+.game-stage:fullscreen .game-player-area{width:100%;height:100%;flex:none}
+@media(max-width:760px){.game-edge-trigger{top:50%;width:37px;height:82px}.game-edge-trigger:hover,.game-edge-trigger:focus-visible{width:45px}.game-start-screen{padding:15px 12px}.game-start-grid{grid-template-columns:repeat(auto-fit,minmax(min(210px,100%),1fr));gap:10px}.game-launch-choice>span{font-size:.82rem}.game-fullscreen{right:8px;bottom:8px;width:36px;height:36px;min-height:36px}}

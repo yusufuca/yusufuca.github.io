@@ -206,20 +206,21 @@ function projectsPage() {
 function gamesPage() {
   const games = projects.filter((item) => item.category === "programming" && item.playable === true);
   const requestedGame = new URLSearchParams(location.search).get("game");
-  const firstPlayable = games.find((game) => game.id === requestedGame && game.gamePath) || games.find((game) => game.gamePath);
+  const firstPlayable = games.find((game) => game.id === requestedGame && game.gamePath) || null;
   const width = Number(firstPlayable?.gameWidth) || 1080;
   const height = Number(firstPlayable?.gameHeight) || 1920;
   return `<main id="main" class="games-page wrap">
-    <header class="games-heading"><div><span class="eyebrow">${esc(copy.gamesEyebrow)}</span><h1>${esc(copy.gamesTitleA)} <span class="gradient-text">${esc(copy.gamesTitleB)}</span></h1></div></header>
-    <section class="game-arcade drawer-open" id="game-arcade" aria-label="Playable games">
+    <header class="games-heading"><h1>${esc(copy.gamesTitleA)} <span class="gradient-text">${esc(copy.gamesTitleB)}</span></h1></header>
+    <section class="game-arcade" id="game-arcade" aria-label="Playable games">
       <aside class="game-drawer" id="game-drawer" aria-label="Game list">
-        <div class="game-drawer-heading"><div><span class="eyebrow">YOUR GAMES</span><h2>Choose a game</h2></div><button class="game-drawer-close" id="game-drawer-close" type="button" aria-label="Close game list">×</button></div>
+        <div class="game-drawer-heading"><div><h2>Choose a game</h2></div><button class="game-drawer-close" id="game-drawer-close" type="button" aria-label="Close game list">×</button></div>
         <div class="game-drawer-list">${games.length ? games.map((game) => `<button class="game-choice ${game.id === firstPlayable?.id ? "active" : ""}" type="button" data-game-id="${esc(game.id)}" ${game.gamePath ? `aria-pressed="${game.id === firstPlayable?.id}"` : "disabled title='Playable build not uploaded yet'"}><img src="${esc(projectThumbnail(game))}" alt="" loading="lazy"/><span><strong>${esc(game.title)}</strong><small>${game.gamePath ? esc(copy.gamesPlay) : esc(copy.gameShowcaseLabel)}</small></span>${game.gamePath ? `<span class="game-choice-mark" aria-hidden="true">›</span>` : ""}</button>`).join("") : `<p class="game-list-empty">Mark a project as playable in the admin panel to show it here.</p>`}</div>
         <a class="game-project-link" href="projects.html">${esc(copy.gamesExplore)} ${icon.arrow}</a>
       </aside>
+      <button class="game-edge-trigger" id="game-menu-button" type="button" aria-expanded="false" aria-controls="game-drawer" aria-label="Open game list" title="Browse games"><span class="game-edge-arrow" aria-hidden="true">›</span><span class="game-edge-label" aria-hidden="true">Games</span></button>
       <div class="game-stage" id="game-stage">
-        <div class="game-stage-toolbar"><button class="game-menu-button" id="game-menu-button" type="button" aria-expanded="true" aria-controls="game-drawer">☰ <span>Games</span></button><span class="game-now-playing" id="game-now-playing">${esc(firstPlayable?.title || "Choose a game")}</span><button class="game-fullscreen" id="game-fullscreen" type="button" ${firstPlayable ? "" : "disabled"}>Fullscreen ⛶</button></div>
-        <div class="game-player-area" id="game-player-area">${firstPlayable ? `<iframe class="game-player-frame" id="game-player-frame" src="${esc(firstPlayable.gamePath)}" title="${esc(firstPlayable.title)} playable game" width="${width}" height="${height}" allow="autoplay; fullscreen; gamepad; clipboard-read; clipboard-write" allowfullscreen></iframe>` : `<div class="game-player-empty"><span class="game-empty-icon">${icon.gamepad}</span><h2>Choose a game to play</h2><p>Upload a WebGL build from the admin panel, then launch it here.</p></div>`}</div>
+        <div class="game-player-area" id="game-player-area">${firstPlayable ? `<iframe class="game-player-frame" id="game-player-frame" src="${esc(firstPlayable.gamePath)}" title="${esc(firstPlayable.title)} playable game" width="${width}" height="${height}" allow="autoplay; fullscreen; gamepad; clipboard-read; clipboard-write" allowfullscreen></iframe>` : `<div class="game-start-screen"><div class="game-start-heading"><h2>Choose a game</h2><p>Select a project to start playing.</p></div><div class="game-start-grid">${games.filter((game) => game.gamePath).map((game) => `<button class="game-launch-choice" type="button" data-game-id="${esc(game.id)}"><img src="${esc(projectThumbnail(game))}" alt="" /><span>${esc(game.title)}</span><b aria-hidden="true">Play&nbsp; ↗</b></button>`).join("")}</div></div>`}</div>
+        <button class="game-fullscreen" id="game-fullscreen" type="button" aria-label="Enter fullscreen" title="Fullscreen" ${firstPlayable ? "" : "disabled"}>⛶</button>
       </div>
     </section>
   </main>`;
@@ -374,7 +375,6 @@ function resizeGameFrame() {
   const height = Number(frame.getAttribute("height")) || 1920;
   const ratio = width / height;
   const stage = document.querySelector("#game-stage");
-  const toolbar = stage?.querySelector(".game-stage-toolbar");
   const fullscreen = document.fullscreenElement === stage;
   if (fullscreen && stage) {
     stage.style.width = "";
@@ -382,30 +382,33 @@ function resizeGameFrame() {
     arcade.style.width = "";
   }
   const pageBounds = document.querySelector(".games-page")?.getBoundingClientRect();
-  const drawer = document.querySelector("#game-drawer");
   const mobileDrawer = matchMedia("(max-width: 760px)").matches;
   let availableWidth;
   let availableHeight;
   if (fullscreen) {
     availableWidth = stage.clientWidth;
-    availableHeight = stage.clientHeight - (toolbar?.offsetHeight || 0);
+    availableHeight = stage.clientHeight;
   } else {
-    availableWidth = (pageBounds?.width || window.innerWidth) - (!mobileDrawer && arcade?.classList.contains("drawer-open") ? (drawer?.offsetWidth || 0) : 0) - 2;
-    availableHeight = Math.min(window.innerHeight * 0.72, 800) - (toolbar?.offsetHeight || 0);
+    const pageWidth = pageBounds?.width || window.innerWidth;
+    availableWidth = pageWidth - 2;
+    availableHeight = Math.min(window.innerHeight * 0.72, 800);
   }
   const fittedWidth = Math.max(1, Math.min(availableWidth, availableHeight * ratio));
   const fittedHeight = fittedWidth / ratio;
   if (!fullscreen && stage && arcade) {
-    area.style.width = `${Math.floor(fittedWidth)}px`;
+    area.style.width = "100%";
     area.style.height = `${Math.floor(fittedHeight)}px`;
     area.style.flex = "none";
     stage.style.flex = "none";
     stage.style.width = `${Math.floor(fittedWidth)}px`;
-    arcade.style.width = `${Math.floor(fittedWidth + (!mobileDrawer && arcade.classList.contains("drawer-open") ? (drawer?.offsetWidth || 0) : 0) + 2)}px`;
+    stage.style.height = `${Math.floor(fittedHeight)}px`;
+    arcade.style.width = "";
   } else if (fullscreen) {
     area.style.width = "100%";
     area.style.height = "auto";
     area.style.flex = "1";
+    stage.style.width = "100vw";
+    stage.style.height = "100vh";
   }
   frame.style.width = `${Math.floor(fittedWidth)}px`;
   frame.style.height = `${Math.floor(fittedHeight)}px`;
@@ -424,7 +427,8 @@ function chooseGame(id) {
   frame.setAttribute("height", String(height));
   frame.title = `${game.title} playable game`;
   if (frame.getAttribute("src") !== game.gamePath) frame.src = game.gamePath;
-  document.querySelector("#game-now-playing").textContent = game.title;
+  const nowPlaying = document.querySelector("#game-now-playing");
+  if (nowPlaying) nowPlaying.textContent = game.title;
   document.querySelectorAll(".game-choice").forEach((button) => {
     const active = button.dataset.gameId === game.id;
     button.classList.toggle("active", active);
@@ -432,19 +436,28 @@ function chooseGame(id) {
   });
   document.querySelector("#game-fullscreen").disabled = false;
   resizeGameFrame();
+  toggleGameDrawer(false);
 }
 const toggleGameDrawer = (open) => {
   if (!arcade) return;
   arcade.classList.toggle("drawer-open", open);
   const button = document.querySelector("#game-menu-button");
   button?.setAttribute("aria-expanded", String(open));
+  button?.setAttribute("aria-label", open ? "Close game list" : "Open game list");
   window.setTimeout(resizeGameFrame, 280);
 };
 document.querySelectorAll(".game-choice[data-game-id]").forEach((button) => {
   button.addEventListener("click", () => chooseGame(button.dataset.gameId));
 });
-document.querySelector("#game-menu-button")?.addEventListener("click", () => toggleGameDrawer(!arcade.classList.contains("drawer-open")));
+document.querySelectorAll(".game-launch-choice[data-game-id]").forEach((button) => {
+  button.addEventListener("click", () => chooseGame(button.dataset.gameId));
+});
+const gameEdgeTrigger = document.querySelector("#game-menu-button");
+gameEdgeTrigger?.addEventListener("click", () => toggleGameDrawer(!arcade.classList.contains("drawer-open")));
 document.querySelector("#game-drawer-close")?.addEventListener("click", () => toggleGameDrawer(false));
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && arcade?.classList.contains("drawer-open")) toggleGameDrawer(false);
+});
 document.querySelector("#game-fullscreen")?.addEventListener("click", async () => {
   const stage = document.querySelector("#game-stage");
   if (!stage || !document.querySelector("#game-player-frame")) return;
@@ -456,7 +469,12 @@ document.querySelector("#game-fullscreen")?.addEventListener("click", async () =
 document.addEventListener("fullscreenchange", () => {
   const stage = document.querySelector("#game-stage");
   const button = document.querySelector("#game-fullscreen");
-  if (button) button.textContent = document.fullscreenElement === stage ? "Exit fullscreen ⛶" : "Fullscreen ⛶";
+  if (button) {
+    const isFullscreen = document.fullscreenElement === stage;
+    button.textContent = "⛶";
+    button.setAttribute("aria-label", isFullscreen ? "Exit fullscreen" : "Enter fullscreen");
+    button.title = isFullscreen ? "Exit fullscreen" : "Fullscreen";
+  }
   window.requestAnimationFrame(resizeGameFrame);
 });
 window.addEventListener("resize", resizeGameFrame);
