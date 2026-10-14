@@ -5,7 +5,7 @@ const [site, projects] = await Promise.all([
 
 const copy = {
   navHome: "Home", navProjects: "Projects", navGames: "Games", navAbout: "About", navTalk: "Let’s talk",
-  heroEyebrow: "GAME DEVELOPER · SOUND ENGINEERING BACKGROUND", heroTitleA: "I make games", heroTitleB: "feel good.",
+  heroEyebrow: "GAME DEVELOPER · SOUND ENGINEERING BACKGROUND", heroTitleA: "Game Developer", heroTitleB: "Sound Engineer",
   heroLead: "I build responsive, playful game systems — and the audio that brings them to life.",
   heroButton: "Check out my work", heroAboutButton: "Read my full profile",
   skills: "Unity, C#, Game Feel, Systems Design, Audio, FMOD",
@@ -198,7 +198,7 @@ function projectsPage() {
   const programming = projects.filter((item) => item.category === "programming");
   const audio = projects.filter((item) => item.category === "audio");
   return `<main id="main" class="page-main wrap"><header class="page-heading"><h1>${esc(copy.projectsTitleA)}<br /><span class="gradient-text">${esc(copy.projectsTitleB)}</span></h1></header>
-    <div class="filter-row" role="group" aria-label="Filter projects"><button class="filter-button active" data-filter="all" aria-pressed="true">${esc(copy.filterAll)}</button><button class="filter-button" data-filter="programming" aria-pressed="false">${esc(copy.filterProgramming)}</button><button class="filter-button" data-filter="audio" aria-pressed="false">${esc(copy.filterAudio)}</button></div>
+    <div class="filter-row" role="group" aria-label="Filter projects"><button class="filter-button active" data-filter="all" aria-pressed="true">${esc(copy.filterAll)}</button><button class="filter-button" data-filter="programming" aria-pressed="false"><span class="filter-icon" aria-hidden="true">${icon.gamepad}</span>${esc(copy.filterProgramming)}</button><button class="filter-button" data-filter="audio" aria-pressed="false"><span class="filter-icon" aria-hidden="true"><span class="sound-bars"><i></i><i></i><i></i><i></i><i></i></span></span>${esc(copy.filterAudio)}</button></div>
     <div class="projects-page-grid">${groupBlock("programming", copy.programmingTitle, copy.projectsProgrammingDescription, programming, true)}${groupBlock("audio", copy.audioTitle, copy.projectsAudioDescription, audio, true)}</div>
   </main>`;
 }
