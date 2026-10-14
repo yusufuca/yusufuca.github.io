@@ -103,9 +103,12 @@ function projectThumbnail(project) {
 }
 
 function projectMedia(project, expanded) {
-  if (!expanded) return `<img src="${esc(projectThumbnail(project))}" alt="${esc(project.alt)}" loading="lazy" width="800" height="600" />`;
   const videoUrl = youtubeEmbedUrl(project.videoUrl);
-  if (videoUrl) return `<iframe src="${videoUrl}" title="${esc(project.title)} video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
+  if (videoUrl) {
+    const playerUrl = `${videoUrl}&enablejsapi=1&playsinline=1&origin=${encodeURIComponent(location.origin)}`;
+    return `<iframe class="project-video-frame" src="${esc(playerUrl)}" title="${esc(project.title)} video" loading="eager" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><div class="project-video-cover"><img src="${esc(projectThumbnail(project))}" alt="${esc(project.alt)}" width="800" height="450" /></div>`;
+  }
+  if (!expanded) return `<img src="${esc(projectThumbnail(project))}" alt="${esc(project.alt)}" loading="lazy" width="800" height="600" />`;
   return `<div class="video-placeholder"><span>▶</span><p>Add a YouTube video URL in the admin panel to show the video here.</p></div>`;
 }
 
@@ -120,7 +123,7 @@ function projectCard(project, expanded = false) {
     <button class="project-trigger" type="button" aria-expanded="${expanded}" aria-controls="details-${esc(project.id)}">
       <span class="project-title">${esc(project.title)}</span><span class="expand-mark" aria-hidden="true">${expanded ? "−" : "+"}</span>
     </button>
-    <div class="project-visual ${expanded && youtubeEmbedUrl(project.videoUrl) ? "has-video" : expanded ? "is-placeholder" : ""}">${projectMedia(project, expanded)}</div>
+    <div class="project-visual ${youtubeEmbedUrl(project.videoUrl) ? "has-video" : expanded ? "is-placeholder" : ""}">${projectMedia(project, expanded)}</div>
     ${tags(project.tags)}
     <div class="project-details" id="details-${esc(project.id)}" ${expanded ? "" : "hidden"}>
       ${project.subtitle ? `<span class="project-subtitle">${esc(project.subtitle)}</span>` : ""}
@@ -173,8 +176,7 @@ function groupBlock(category, title, subtitle, items, compact = false) {
 function homePage() {
   const programming = projects.filter((item) => item.category === "programming");
   const audio = projects.filter((item) => item.category === "audio");
-  const showreelProject = projects.find((item) => item.id === "game-feel-systems");
-  const showreelImage = showreelProject ? projectThumbnail(showreelProject) : "assets/sifb.svg";
+  const showreelPlayerUrl = showreelEmbed ? `${showreelEmbed}&playsinline=1&controls=1` : "";
   return `<main id="main">
     <section class="hero wrap">
       <div class="hero-copy"><h1>${esc(copy.heroTitleA)}<br /><span class="gradient-text">${esc(copy.heroTitleB)}</span></h1>
@@ -182,11 +184,9 @@ function homePage() {
         <ul class="tag-list skill-pills" aria-label="Core skills">${splitCopy("skills").map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
         <div class="hero-actions"><a class="button button-violet" href="projects.html">${esc(copy.heroButton || "Check out my work")} ${icon.arrow}</a><a class="button button-violet" href="about.html">${esc(copy.heroAboutButton || "Read my full profile")} ${icon.arrow}</a></div>
       </div>
-      <div class="showreel-wrap"><div class="showreel-card" style="--reel-image:url('${esc(showreelImage)}')">
-        <div class="showreel-top"><span>${esc(copy.showreelTitle)}</span><span class="reel-duration">${esc(copy.showreelSubtitle)}</span></div>
-        <div class="reel-scene"><span class="reel-orbit orbit-one"></span><span class="reel-orbit orbit-two"></span><button class="play-button" type="button" aria-label="Open showreel details">▶</button></div>
-        <div class="showreel-bottom"><span>${esc(copy.showreelFooter)}</span><a href="projects.html" aria-label="Explore selected projects">${icon.arrow}</a></div>
-      </div><p class="reel-note">${esc(copy.showreelNote)}</p></div>
+      <div class="showreel-wrap"><div class="showreel-card">
+        ${showreelPlayerUrl ? `<iframe class="showreel-frame" src="${esc(showreelPlayerUrl)}" title="${esc(copy.dialogTitle)}" loading="eager" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>` : ""}
+      </div></div>
     </section>
     <section class="work-section wrap" id="work">
       <div class="work-columns">${groupBlock("programming", copy.programmingTitle, copy.programmingDescription, programming)}${groupBlock("audio", copy.audioTitle, copy.audioDescription, audio)}</div>
@@ -232,7 +232,8 @@ function aboutPage() {
 }
 
 const pageContent = { home: homePage, projects: projectsPage, games: gamesPage, about: aboutPage };
-app.innerHTML = `${header(page)}${(pageContent[page] || homePage)()}${footer()}<dialog class="reel-dialog" aria-labelledby="dialog-title"><button class="dialog-close" type="button" aria-label="Close showreel details">×</button><span class="eyebrow">${esc(copy.dialogEyebrow)}</span><h2 id="dialog-title">${esc(copy.dialogTitle)}</h2><p>${esc(site.showreelUrl ? copy.showreelReady : copy.showreelMissing)}</p>${site.showreelUrl ? `<a class="button button-violet" href="${esc(site.showreelUrl)}" target="_blank" rel="noreferrer">${esc(copy.showreelAction)} ${icon.arrow}</a>` : `<a class="text-link" href="projects.html">${esc(copy.showreelBrowse)} ${icon.arrow}</a>`}</dialog>`;
+const showreelEmbed = youtubeEmbedUrl(site.showreelUrl);
+app.innerHTML = `${header(page)}${(pageContent[page] || homePage)()}${footer()}`;
 
 document.querySelectorAll(".email-copy-button").forEach((copyEmailButton) => copyEmailButton.addEventListener("click", async () => {
   const email = copyEmailButton.dataset.email.trim();
@@ -285,9 +286,13 @@ function toggleProject(card) {
     item.querySelector(".project-trigger").setAttribute("aria-expanded", String(open));
     item.querySelector(".expand-mark").textContent = open ? "−" : "+";
     item.querySelector(".project-details").hidden = !open;
-    item.querySelector(".project-visual").classList.toggle("has-video", open && Boolean(youtubeEmbedUrl(project?.videoUrl)));
+    item.querySelector(".project-visual").classList.toggle("has-video", Boolean(youtubeEmbedUrl(project?.videoUrl)));
     item.querySelector(".project-visual").classList.toggle("is-placeholder", open && !youtubeEmbedUrl(project?.videoUrl));
-    item.querySelector(".project-visual").innerHTML = project ? projectMedia(project, open) : "";
+    const visual = item.querySelector(".project-visual");
+    const frame = visual.querySelector(".project-video-frame");
+    if (frame) {
+      if (!open) frame.contentWindow?.postMessage(JSON.stringify({ event: "command", func: "pauseVideo", args: [] }), "https://www.youtube-nocookie.com");
+    } else visual.innerHTML = project ? projectMedia(project, open) : "";
   });
 }
 
@@ -457,9 +462,3 @@ document.addEventListener("fullscreenchange", () => {
 window.addEventListener("resize", resizeGameFrame);
 if (gameFrame) resizeGameFrame();
 
-const dialog = document.querySelector(".reel-dialog");
-document.querySelector(".play-button")?.addEventListener("click", () => dialog.showModal());
-document.querySelector(".dialog-close")?.addEventListener("click", () => dialog.close());
-dialog?.addEventListener("click", (event) => {
-  if (event.target === dialog) dialog.close();
-});
