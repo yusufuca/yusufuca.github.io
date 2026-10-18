@@ -55,7 +55,7 @@ function header(active) {
 }
 
 function footer() {
-  return `<footer class="site-footer" id="contact"><div class="wrap footer-inner"><div class="footer-intro"><h2>${esc(copy.footerTitleA)}</h2><p>${esc(copy.footerDescription)}</p></div><div class="footer-bottom"><a class="brand brand-compact" href="index.html"><span class="brand-name">${esc(site.name)}</span><span class="brand-role">${esc(site.role)}</span></a>${copy.footerNote ? `<span class="footer-note">${esc(copy.footerNote)}</span>` : ""}${contactActions()}</div></div></footer>`;
+  return `<footer class="site-footer" id="contact"><div class="wrap footer-inner"><div class="footer-bottom"><a class="brand brand-compact" href="index.html"><span class="brand-name">${esc(site.name)}</span><span class="brand-role">${esc(site.role)}</span></a>${copy.footerNote ? `<span class="footer-note">${esc(copy.footerNote)}</span>` : ""}${contactActions()}</div></div></footer>`;
 }
 
 function tags(items) {
@@ -162,7 +162,7 @@ function homePage() {
   const showreelPlayerUrl = showreelEmbed ? `${showreelEmbed}&playsinline=1&controls=1` : "";
   return `<main id="main">
     <section class="hero wrap">
-      <div class="hero-copy"><span class="eyebrow">${esc(copy.heroEyebrow)}</span><h1>${esc(copy.heroTitleA)}<br /><span class="gradient-text">${esc(copy.heroTitleB)}</span></h1>
+      <div class="hero-copy"><h1>${esc(copy.heroTitleA)}<br /><span class="gradient-text">${esc(copy.heroTitleB)}</span></h1>
         <p class="hero-lede">${esc(copy.heroLead)}</p>
         <ul class="tag-list skill-pills" aria-label="Core skills">${splitCopy("skills").map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
         <div class="hero-actions"><a class="button button-violet" href="projects.html">${esc(copy.heroButton || "Projects")} ${icon.arrow}</a><a class="button button-violet" href="about.html">${esc(copy.heroAboutButton || "About")} ${icon.arrow}</a></div>
@@ -201,7 +201,7 @@ function gamesPage() {
         <div class="game-drawer-list">${games.length ? games.map((game) => `<button class="game-choice ${game.id === firstPlayable?.id ? "active" : ""}" type="button" data-game-id="${esc(game.id)}" ${game.gamePath ? `aria-pressed="${game.id === firstPlayable?.id}"` : "disabled title='Playable build not uploaded yet'"}><img src="${esc(projectThumbnail(game))}" alt="" loading="lazy"/><span><strong>${esc(game.title)}</strong><small>${game.gamePath ? esc(copy.gamesPlay) : esc(copy.gameShowcaseLabel)}</small></span>${game.gamePath ? `<span class="game-choice-mark" aria-hidden="true">›</span>` : ""}</button>`).join("") : `<p class="game-list-empty">${esc(copy.gamesEmptyTitle)}</p>`}</div>
         <a class="game-project-link" href="projects.html">${esc(copy.gamesExplore)} ${icon.arrow}</a>
       </aside>
-      <button class="game-edge-trigger" id="game-menu-button" type="button" aria-expanded="false" aria-controls="game-drawer" aria-label="Open game list" title="Browse games"><span class="game-edge-arrow" aria-hidden="true">›</span><span class="game-edge-label" aria-hidden="true">Games</span></button>
+      <button class="game-edge-trigger" id="game-menu-button" type="button" aria-expanded="false" aria-controls="game-drawer" aria-label="Open game list" title="Browse games" ${firstPlayable ? "" : "hidden"}><span class="game-edge-arrow" aria-hidden="true">›</span><span class="game-edge-label" aria-hidden="true">Games</span></button>
       <div class="game-stage" id="game-stage">
         <div class="game-player-area" id="game-player-area">${firstPlayable ? `<iframe class="game-player-frame" id="game-player-frame" src="${esc(firstPlayable.gamePath)}" title="${esc(firstPlayable.title)} playable game" width="${width}" height="${height}" allow="autoplay; fullscreen; gamepad; clipboard-read; clipboard-write" allowfullscreen></iframe>` : `<div class="game-start-screen"><div class="game-start-heading"><h2>${esc(games.some((game) => game.gamePath) ? copy.gamesReadyTitle : copy.gamesEmptyTitle)}</h2></div><div class="game-start-grid">${games.filter((game) => game.gamePath).map((game) => `<button class="game-launch-choice" type="button" data-game-id="${esc(game.id)}"><img src="${esc(projectThumbnail(game))}" alt="" /><span><strong>${esc(game.title)}</strong><small class="game-launch-action">${esc(copy.gamesPlay)} ↗</small></span></button>`).join("")}</div></div>`}</div>
         <button class="game-fullscreen" id="game-fullscreen" type="button" aria-label="Enter fullscreen" title="Fullscreen" ${firstPlayable ? "" : "disabled"}>⛶</button>
@@ -429,11 +429,12 @@ function chooseGame(id) {
     button.setAttribute("aria-pressed", String(active));
   });
   document.querySelector("#game-fullscreen").disabled = false;
+  document.querySelector("#game-menu-button").hidden = false;
   resizeGameFrame();
   toggleGameDrawer(false);
 }
 const toggleGameDrawer = (open) => {
-  if (!arcade) return;
+  if (!arcade || !document.querySelector("#game-player-frame")) return;
   arcade.classList.toggle("drawer-open", open);
   const button = document.querySelector("#game-menu-button");
   button?.setAttribute("aria-expanded", String(open));

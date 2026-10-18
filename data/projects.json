@@ -14,7 +14,7 @@
       "Fighting"
     ],
     "description": "A Unity game made for DreamLayer GameJam 2026. I developed the gameplay programming and game systems, including QTE-driven boxing combat, ScriptableObject-configured fighters and FMOD interactive audio.\n\nI also created a Unity Editor tool for DreamLayer API asset generation, download and import with AI assistance. The playable WebGL build is available here.",
-    "videoUrl": "",
+    "videoUrl": "https://youtu.be/oV-VJnafXzA?si=Mlr-nMSonFtP2wEc",
     "itchUrl": "https://yusemuca.itch.io/super-interdimensional-fight-bonanza",
     "gamePath": "games/sifb/index.html",
     "gameWidth": 1920,
