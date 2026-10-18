@@ -91,5 +91,7 @@
     "projectsProgrammingDetails": "Unity and C# projects covering gameplay programming, game architecture and development tools. This section also includes FMOD projects on adaptive music and procedural acoustics. Select a project for its video, implementation notes and source links.",
     "projectsAudioDetails": "Linear sound redesigns for gameplay and cinematic sequences. Select a project to watch the video and read its production notes and source-audio credits."
   },
-  "cvUrl": "assets/yusuf-semih-uca-cv-2026-10.pdf"
+  "cvUrl": "assets/yusuf-semih-uca-cv-2026-10.pdf",
+  "cvPreviewUrl": "assets/yusuf-semih-uca-cv-2026-10-preview.webp",
+  "cvPreviewFor": "assets/yusuf-semih-uca-cv-2026-10.pdf"
 }

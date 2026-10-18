@@ -35,7 +35,7 @@ function contactActions(className = "footer-contact-actions") {
   const cvButton = site.cvUrl
     ? `<a class="footer-utility-button" href="${esc(site.cvUrl)}" download aria-label="Download CV"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 17v3h14v-3"/></svg><span>${esc(copy.cvButton)}</span></a>`
     : "";
-  const socialLinks = socials.map(([key, label]) => `<a class="footer-social-link" href="${esc(site.socials[key])}" aria-label="${label}" title="${label}" target="_blank" rel="noreferrer">${icon[key] || icon.gamepad}</a>`).join("");
+  const socialLinks = socials.map(([key, label]) => `<a class="footer-social-link" href="${esc(site.socials[key])}" aria-label="${label}" title="${label}" target="_blank" rel="noreferrer">${icon[key] || icon.gamepad}<span>${label}</span></a>`).join("");
   return `<div class="${className}">${cvButton}<span class="email-copy-wrap"><button class="footer-utility-button email-copy-button contact-button" type="button" data-email="${esc(site.email || "")}" aria-label="Copy email address" title="Copy email address">${gmailLogo}<span class="email-button-label">${esc(copy.footerEmailButton)}</span><svg class="copy-check-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg></button><span class="email-copy-status" role="status" aria-live="polite"></span></span><div class="footer-social-links">${socialLinks}</div></div>`;
 }
 
@@ -209,15 +209,34 @@ function gamesPage() {
   </main>`;
 }
 
+function cvPreview() {
+  if (!site.cvUrl) return "";
+  const previewImage = site.cvPreviewFor === site.cvUrl ? site.cvPreviewUrl : "";
+  const image = previewImage ? `<img class="cv-preview-image" src="${esc(previewImage)}" alt="${esc(site.name)} CV — full page preview" width="1489" height="2105" loading="lazy" />` : "";
+  return `<section class="cv-preview ${previewImage ? "has-image-preview" : ""}" aria-labelledby="cv-preview-title">
+    <header class="cv-preview-heading"><h2 id="cv-preview-title">CV</h2><div class="cv-preview-actions"><a class="footer-utility-button" href="${esc(site.cvUrl)}" target="_blank" rel="noreferrer">Open PDF ${icon.arrow}</a><a class="footer-utility-button" href="${esc(site.cvUrl)}" download>${esc(copy.cvButton)}</a></div></header>
+    <div class="cv-document-shell">${previewImage ? `<div class="cv-image-preview"><button class="cv-preview-zoom footer-utility-button" type="button" aria-pressed="false">Enlarge preview</button><div class="cv-image-scroll" tabindex="0" role="region" aria-label="Scrollable CV preview">${image}</div></div>` : `<object class="cv-pdf-object" data="${esc(site.cvUrl)}#view=FitH" type="application/pdf" aria-label="${esc(site.name)} CV PDF preview"><p class="cv-preview-unavailable">Open the PDF to view this CV.</p></object>`}</div>
+  </section>`;
+}
+
 function aboutPage() {
   return `<main id="main" class="page-main wrap"><header class="page-heading"><h1>${esc(copy.aboutTitleA)}${copy.aboutTitleB ? `<br /><span class="accent-text">${esc(copy.aboutTitleB)}</span>` : ""}</h1><p class="about-lede">${esc(copy.aboutLead)}</p></header>
     <section class="about-layout"><div class="about-story"><h2>${esc(copy.aboutStoryTitleA)}${copy.aboutStoryTitleB ? `<br />${esc(copy.aboutStoryTitleB)}` : ""}</h2><p>${esc(copy.aboutParagraph1)}</p><p>${esc(copy.aboutParagraph2)}</p>${copy.aboutParagraph3 ? `<p>${esc(copy.aboutParagraph3)}</p>` : ""}${copy.aboutParagraph4 ? `<p>${esc(copy.aboutParagraph4)}</p>` : ""}<div class="about-focus"><h3>${esc(copy.focusEyebrow)}</h3><ul class="tag-list">${splitCopy("focusAreas").map((item) => `<li>${esc(item)}</li>`).join("")}</ul></div><a class="button button-primary" href="projects.html">${esc(copy.aboutButton)} ${icon.arrow}</a>${contactActions("about-contact-actions")}</div></section>
+    ${cvPreview()}
   </main>`;
 }
 
 const pageContent = { home: homePage, projects: projectsPage, games: gamesPage, about: aboutPage };
 const showreelEmbed = youtubeEmbedUrl(site.showreelUrl);
 app.innerHTML = `${header(page)}${(pageContent[page] || homePage)()}${footer()}`;
+
+document.querySelector(".cv-preview-zoom")?.addEventListener("click", (event) => {
+  const button = event.currentTarget;
+  const expanded = button.getAttribute("aria-pressed") !== "true";
+  button.setAttribute("aria-pressed", String(expanded));
+  button.textContent = expanded ? "Fit preview" : "Enlarge preview";
+  button.closest(".cv-preview").classList.toggle("is-zoomed", expanded);
+});
 
 document.querySelectorAll(".email-copy-button").forEach((copyEmailButton) => copyEmailButton.addEventListener("click", async () => {
   const email = copyEmailButton.dataset.email.trim();

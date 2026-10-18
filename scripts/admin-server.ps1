@@ -182,7 +182,7 @@ function Handle-Client($client) {
     $filePath = [IO.Path]::GetFullPath((Join-Path $root $relative))
     if (-not $filePath.StartsWith($root + [IO.Path]::DirectorySeparatorChar, [StringComparison]::OrdinalIgnoreCase) -or -not (Test-Path -LiteralPath $filePath -PathType Leaf)) { Send-Json $stream 404 @{ error = 'Not found.' }; return }
     $extension = [IO.Path]::GetExtension($filePath).ToLowerInvariant()
-    $mime = @{ '.html'='text/html; charset=utf-8'; '.js'='text/javascript; charset=utf-8'; '.css'='text/css; charset=utf-8'; '.json'='application/json; charset=utf-8'; '.svg'='image/svg+xml'; '.png'='image/png'; '.jpg'='image/jpeg'; '.jpeg'='image/jpeg'; '.webp'='image/webp'; '.wasm'='application/wasm'; '.data'='application/octet-stream'; '.unityweb'='application/octet-stream'; '.asset'='application/octet-stream'; '.bin'='application/octet-stream'; '.mp3'='audio/mpeg'; '.ogg'='audio/ogg'; '.wav'='audio/wav'; '.mp4'='video/mp4'; '.woff2'='font/woff2' }
+    $mime = @{ '.html'='text/html; charset=utf-8'; '.js'='text/javascript; charset=utf-8'; '.css'='text/css; charset=utf-8'; '.json'='application/json; charset=utf-8'; '.svg'='image/svg+xml'; '.png'='image/png'; '.jpg'='image/jpeg'; '.jpeg'='image/jpeg'; '.webp'='image/webp'; '.wasm'='application/wasm'; '.data'='application/octet-stream'; '.unityweb'='application/octet-stream'; '.asset'='application/octet-stream'; '.bin'='application/octet-stream'; '.mp3'='audio/mpeg'; '.ogg'='audio/ogg'; '.wav'='audio/wav'; '.mp4'='video/mp4'; '.woff2'='font/woff2'; '.pdf'='application/pdf' }
     $contentType = if ($mime.ContainsKey($extension)) { $mime[$extension] } else { 'application/octet-stream' }
     Send-File $stream $filePath $contentType ($request.Method -eq 'HEAD')
   } catch {
