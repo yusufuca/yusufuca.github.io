@@ -13,7 +13,7 @@
       "3D",
       "Fighting"
     ],
-    "description": "A 3D party fighting game made in Unity for DreamLayer GameJam 2026.",
+    "description": "A Unity game made for DreamLayer GameJam 2026. I developed the gameplay programming and game systems, including QTE-driven boxing combat, ScriptableObject-configured fighters and FMOD interactive audio.\n\nI also created a Unity Editor tool for DreamLayer API asset generation, download and import with AI assistance. The playable WebGL build is available here.",
     "videoUrl": "",
     "itchUrl": "https://yusemuca.itch.io/super-interdimensional-fight-bonanza",
     "gamePath": "games/sifb/index.html",
@@ -24,8 +24,37 @@
     "subtitle": "DreamLayer GameJam 2026"
   },
   {
+    "id": "game-feel-systems",
+    "title": "Roguelite Demo",
+    "category": "programming",
+    "subtitle": "Unity / C# / Game Feel & System Architecture",
+    "date": "2026-09-13",
+    "image": "",
+    "alt": "Gameplay systems architecture project artwork",
+    "tags": [
+      "Unity",
+      "C#",
+      "Game Feel & System Architecture"
+    ],
+    "description": "An independently developed Unity and C# gameplay project, built without AI-generated code. It includes concurrent movement and combat state machines, timed attack phases, hit detection and reactions, enemy patrol and chase behavior, pooling, and ScriptableObject-based skills, buffs and cooldowns.",
+    "videoUrl": "https://www.youtube.com/embed/P7KOq5rkvFs?si=69s01fo-XmvBisNd",
+    "itchUrl": "",
+    "gamePath": "",
+    "playable": false,
+    "links": [
+      {
+        "label": "GitHub",
+        "url": "https://github.com/yusufuca/RogueLiteGameDemo/tree/main/Assets/_Scripts"
+      },
+      {
+        "label": "Devlog Playlist",
+        "url": "https://www.youtube.com/playlist?list=PLf5cfXFonNw8"
+      }
+    ]
+  },
+  {
     "id": "merge-fruit",
-    "title": "Merge Fruit Game",
+    "title": "Merge Fruits",
     "category": "programming",
     "subtitle": "Unity / C# · Suika Game Clone",
     "date": "2026-09-28",
@@ -54,37 +83,8 @@
     ]
   },
   {
-    "id": "game-feel-systems",
-    "title": "A Study in Game Feel & Systems Architecture",
-    "category": "programming",
-    "subtitle": "Unity / C# / Game Feel & System Architecture",
-    "date": "2026-09-13",
-    "image": "",
-    "alt": "Gameplay systems architecture project artwork",
-    "tags": [
-      "Unity",
-      "C#",
-      "Game Feel & System Architecture"
-    ],
-    "description": "A personal learning project in Unity and C#, covering state machines, gameplay architecture and game feel.",
-    "videoUrl": "https://www.youtube.com/embed/P7KOq5rkvFs?si=69s01fo-XmvBisNd",
-    "itchUrl": "",
-    "gamePath": "",
-    "playable": false,
-    "links": [
-      {
-        "label": "GitHub",
-        "url": "https://github.com/yusufuca/RogueLiteGameDemo/tree/main/Assets/_Scripts"
-      },
-      {
-        "label": "Devlog Playlist",
-        "url": "https://www.youtube.com/playlist?list=PLf5cfXFonNw8"
-      }
-    ]
-  },
-  {
     "id": "16barlogic",
-    "title": "16barlogic — Adaptive Non-Linear Music System",
+    "title": "16BarLogic",
     "category": "programming",
     "subtitle": "Unity / C# / FMOD / State Machine Logic",
     "date": "2026-07-26",
@@ -96,7 +96,7 @@
       "FMOD",
       "State Machine Logic"
     ],
-    "description": "An adaptive music demo built in Unity and FMOD. It uses vertical layering and horizontal resequencing to change musical stems and sections in response to gameplay states.\n\nI worked on the audio design, DSP calculations and acoustic logic. Player movement and combat triggers were built with AI assistance to test the audio systems. The Roguelite Demo covers my separate work on gameplay programming.",
+    "description": "An adaptive music demo built in Unity and FMOD, using a seven-state music FSM with BPM/bar-quantized transitions, state timers and priority locks. It uses vertical layering and horizontal resequencing to change musical stems and sections in response to gameplay states.\n\nI worked on the audio design, DSP calculations and acoustic logic. Player movement and combat triggers were built with AI assistance to test the audio systems. The Roguelite Demo covers my separate work on gameplay programming.",
     "textLinks": [
       {
         "text": "Roguelite Demo",
@@ -116,7 +116,7 @@
   },
   {
     "id": "dsp-demo",
-    "title": "DSP-Demo — Procedural Acoustics & Occlusion Engine",
+    "title": "DSP-DEMO",
     "category": "programming",
     "subtitle": "Unity / C# / FMOD Middleware",
     "date": "2026-07-25",

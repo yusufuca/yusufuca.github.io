@@ -3,31 +3,12 @@ const [site, projects] = await Promise.all([
   fetch("data/projects.json").then((response) => response.json()),
 ]);
 
+// Editorial content is managed in data/site.json and the local Website Text editor.
 const copy = {
-  navHome: "Home", navProjects: "Projects", navGames: "Games", navAbout: "About", navTalk: "Contact",
-  heroEyebrow: "GAME DEVELOPMENT · SOUND ENGINEERING", heroTitleA: "Game Developer", heroTitleB: "Sound Engineer",
-  heroLead: "I'm a junior game developer with a background in live sound engineering and studio production. I currently work on game projects in Unity and C#, and audio implementation with FMOD.",
-  heroButton: "Projects", heroAboutButton: "About",
-  skills: "Unity, C#, Game Feel, Systems Design, Technical Audio Design, FMOD",
-  showreelTitle: "A Study in Game Feel & Systems Architecture", showreelSubtitle: "Unity / C#", showreelCaptionA: "Gameplay systems demo", showreelCaptionB: "Unity / C#",
-  showreelFooter: "Game programming and game audio", showreelNote: "",
-  workEyebrow: "PROJECTS", workTitle: "Projects", workDescription: "Game development and audio projects.",
-  programmingTitle: "Game Programming", programmingDescription: "Unity and C# projects, gameplay systems and prototypes.", audioTitle: "Game Audio", audioDescription: "Sound redesign, music and audio implementation.",
-  projectsEyebrow: "PROJECTS", projectsTitleA: "Projects", projectsTitleB: "", projectsDescription: "Game development and audio projects. Select a project for details.",
-  filterAll: "All projects", filterProgramming: "Game Programming", filterAudio: "Game Audio", projectsProgrammingDescription: "Unity and C# projects, gameplay systems and prototypes.", projectsAudioDescription: "Sound redesign, music and audio implementation.",
-  gamesEyebrow: "GAMES", gamesTitleA: "Playable", gamesTitleB: "games", gamesDescription: "",
-  gamesReadyTitle: "Choose a game", gamesReadyDescription: "Select a game to play in the browser.", gamesEmptyTitle: "No playable games available", gamesEmptyDescription: "There are no browser builds listed here.",
-  gamesExplore: "Project details", gamesPlay: "Play WebGL", gamesItch: "Open on itch.io", gameProjectLabel: "GAME PROJECT", gameShowcaseLabel: "Project details",
-  aboutEyebrow: "ABOUT", aboutTitleA: "About", aboutTitleB: "", aboutLead: "Junior game developer with a background in live sound engineering and studio production.",
-  aboutStoryEyebrow: "BACKGROUND", aboutStoryTitleA: "Background", aboutStoryTitleB: "",
-  aboutParagraph1: "I'm currently learning game development through projects in Unity and C#, with a focus on gameplay systems and game architecture.",
-  aboutParagraph2: "My background includes front-of-house mixing, concert productions and studio work, with practical experience in signal flow, DSP and acoustics.", aboutParagraph3: "Alongside game programming, I work on audio projects using Unity and FMOD. These include procedural acoustics, source occlusion and adaptive music systems. I'm interested in continuing to work with both game programming and audio.", aboutParagraph4: "",
-  aboutButton: "Projects", focusEyebrow: "TOOLS AND TOPICS", focusAreas: "Unity & C#, Gameplay systems, State machines, Game feel, FMOD, Audio implementation, Sound design",
-  principlesEyebrow: "CURRENT WORK", principlesText: "Learning gameplay programming in Unity and C#, alongside game audio projects in FMOD.",
-  footerEyebrow: "CONTACT", footerTitleA: "Contact", footerTitleB: "", footerDescription: "Email, GitHub and LinkedIn.",
-  footerEmailButton: "Email", footerNote: "", footerAbout: "About", cvButton: "Download CV", dialogEyebrow: "SHOWREEL", dialogTitle: "Gameplay systems demo",
-  contactMissing: "Contact details are not available.", showreelReady: "Gameplay systems demo in Unity and C#.",
-  showreelMissing: "No video available.", showreelAction: "Watch video", showreelBrowse: "Projects",
+  navHome: "Home", navProjects: "Projects", navGames: "Games", navAbout: "About",
+  filterAll: "All projects", filterProgramming: "Game Programming", filterAudio: "Game Audio",
+  gamesPlay: "Play in Browser", gamesItch: "View on itch.io", gamesReadyTitle: "Choose a Game",
+  gamesEmptyTitle: "No playable builds available yet.", cvButton: "Download CV",
   ...site.copy,
 };
 const splitCopy = (key) => (copy[key] || "").split(",").map((item) => item.trim()).filter(Boolean);
@@ -52,10 +33,10 @@ const gmailLogo = '<svg class="gmail-logo" viewBox="0 0 24 24" role="img" aria-l
 
 function contactActions(className = "footer-contact-actions") {
   const cvButton = site.cvUrl
-    ? `<a class="footer-utility-button" href="${esc(site.cvUrl)}" download aria-label="Download CV"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 17v3h14v-3"/></svg><span>Download CV</span></a>`
+    ? `<a class="footer-utility-button" href="${esc(site.cvUrl)}" download aria-label="Download CV"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 17v3h14v-3"/></svg><span>${esc(copy.cvButton)}</span></a>`
     : "";
   const socialLinks = socials.map(([key, label]) => `<a class="footer-social-link" href="${esc(site.socials[key])}" aria-label="${label}" title="${label}" target="_blank" rel="noreferrer">${icon[key] || icon.gamepad}</a>`).join("");
-  return `<div class="${className}">${cvButton}<span class="email-copy-wrap"><button class="footer-utility-button email-copy-button" type="button" data-email="${esc(site.email || "")}" aria-label="Copy email address" title="Copy email address">${gmailLogo}<svg class="copy-check-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg></button><span class="email-copy-status" role="status" aria-live="polite"></span></span><div class="footer-social-links">${socialLinks}</div></div>`;
+  return `<div class="${className}">${cvButton}<span class="email-copy-wrap"><button class="footer-utility-button email-copy-button contact-button" type="button" data-email="${esc(site.email || "")}" aria-label="Copy email address" title="Copy email address">${gmailLogo}<span class="email-button-label">${esc(copy.footerEmailButton)}</span><svg class="copy-check-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg></button><span class="email-copy-status" role="status" aria-live="polite"></span></span><div class="footer-social-links">${socialLinks}</div></div>`;
 }
 
 function header(active) {
@@ -74,7 +55,7 @@ function header(active) {
 }
 
 function footer() {
-  return `<footer class="site-footer" id="contact"><div class="wrap footer-inner"><div class="footer-bottom"><a class="brand brand-compact" href="index.html"><span class="brand-name">${esc(site.name)}</span><span class="brand-role">${esc(site.role)}</span></a>${copy.footerNote ? `<span class="footer-note">${esc(copy.footerNote)}</span>` : ""}${contactActions()}</div></div></footer>`;
+  return `<footer class="site-footer" id="contact"><div class="wrap footer-inner"><div class="footer-intro"><h2>${esc(copy.footerTitleA)}</h2><p>${esc(copy.footerDescription)}</p></div><div class="footer-bottom"><a class="brand brand-compact" href="index.html"><span class="brand-name">${esc(site.name)}</span><span class="brand-role">${esc(site.role)}</span></a>${copy.footerNote ? `<span class="footer-note">${esc(copy.footerNote)}</span>` : ""}${contactActions()}</div></div></footer>`;
 }
 
 function tags(items) {
@@ -115,7 +96,7 @@ function projectMedia(project, expanded) {
 function projectCard(project, expanded = false) {
   const links = [
     ...(project.links || []),
-    ...(project.gamePath ? [{ label: "Play on this site", url: `games.html?game=${encodeURIComponent(project.id)}`, kind: "play" }] : []),
+    ...(project.gamePath ? [{ label: copy.gamesPlay, url: `games.html?game=${encodeURIComponent(project.id)}`, kind: "play" }] : []),
     ...(project.itchUrl ? [{ label: "View on itch.io", url: project.itchUrl }] : []),
   ].filter((link) => link.url);
   const description = linkedDescription(project);
@@ -125,6 +106,7 @@ function projectCard(project, expanded = false) {
     </button>
     <div class="project-visual ${youtubeEmbedUrl(project.videoUrl) ? "has-video" : expanded ? "is-placeholder" : ""}">${projectMedia(project, expanded)}</div>
     ${tags(project.tags)}
+    <p class="project-summary">${esc(String(project.description || "").split(/\n\s*\n/)[0])}</p>
     <div class="project-details" id="details-${esc(project.id)}" ${expanded ? "" : "hidden"}>
       ${project.subtitle ? `<span class="project-subtitle">${esc(project.subtitle)}</span>` : ""}
       <p>${description}</p>
@@ -169,6 +151,7 @@ function projectAction(link) {
 function groupBlock(category, title, subtitle, items, compact = false) {
   return `<section class="work-group ${compact ? "work-group-compact" : ""}" data-category="${category}">
     <div class="group-heading"><span class="group-icon" aria-hidden="true">${category === "programming" ? icon.gamepad : "<span class='sound-bars'><i></i><i></i><i></i><i></i><i></i></span>"}</span><div><h2>${esc(title)}</h2><p>${esc(subtitle)}</p></div></div>
+    ${compact ? `<p class="category-overview">${esc(category === "programming" ? copy.projectsProgrammingDetails : copy.projectsAudioDetails)}</p>` : ""}
     <div class="project-grid">${items.map((project) => projectCard(project)).join("")}</div>
   </section>`;
 }
@@ -179,16 +162,17 @@ function homePage() {
   const showreelPlayerUrl = showreelEmbed ? `${showreelEmbed}&playsinline=1&controls=1` : "";
   return `<main id="main">
     <section class="hero wrap">
-      <div class="hero-copy"><h1>${esc(copy.heroTitleA)}<br /><span class="gradient-text">${esc(copy.heroTitleB)}</span></h1>
+      <div class="hero-copy"><span class="eyebrow">${esc(copy.heroEyebrow)}</span><h1>${esc(copy.heroTitleA)}<br /><span class="gradient-text">${esc(copy.heroTitleB)}</span></h1>
         <p class="hero-lede">${esc(copy.heroLead)}</p>
         <ul class="tag-list skill-pills" aria-label="Core skills">${splitCopy("skills").map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
         <div class="hero-actions"><a class="button button-violet" href="projects.html">${esc(copy.heroButton || "Projects")} ${icon.arrow}</a><a class="button button-violet" href="about.html">${esc(copy.heroAboutButton || "About")} ${icon.arrow}</a></div>
       </div>
-      <div class="showreel-wrap"><div class="showreel-card">
+      <div class="showreel-wrap"><div class="featured-project-heading"><h2>${esc(copy.showreelTitle)}</h2><p class="eyebrow">${esc(copy.showreelSubtitle)}</p></div><div class="showreel-card">
         ${showreelPlayerUrl ? `<iframe class="showreel-frame" src="${esc(showreelPlayerUrl)}" title="${esc(copy.dialogTitle)}" loading="eager" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>` : ""}
-      </div></div>
+      </div><p class="featured-project-footer">${esc(copy.showreelFooter)}</p><p class="featured-project-description">${esc(copy.showreelNote)}</p></div>
     </section>
     <section class="work-section wrap" id="work">
+      <header class="section-intro"><h2>${esc(copy.workTitle)}</h2><p>${esc(copy.workDescription)}</p></header>
       <div class="work-columns">${groupBlock("programming", copy.programmingTitle, copy.programmingDescription, programming)}${groupBlock("audio", copy.audioTitle, copy.audioDescription, audio)}</div>
     </section>
   </main>`;
@@ -197,7 +181,7 @@ function homePage() {
 function projectsPage() {
   const programming = projects.filter((item) => item.category === "programming");
   const audio = projects.filter((item) => item.category === "audio");
-  return `<main id="main" class="page-main wrap"><header class="page-heading"><h1>${esc(copy.projectsTitleA)}${copy.projectsTitleB ? `<br /><span class="gradient-text">${esc(copy.projectsTitleB)}</span>` : ""}</h1></header>
+  return `<main id="main" class="page-main wrap"><header class="page-heading"><h1>${esc(copy.projectsTitleA)}${copy.projectsTitleB ? `<br /><span class="gradient-text">${esc(copy.projectsTitleB)}</span>` : ""}</h1><p>${esc(copy.projectsDescription)}</p></header>
     <div class="filter-row" role="group" aria-label="Filter projects"><button class="filter-button active" data-filter="all" aria-pressed="true">${esc(copy.filterAll)}</button><button class="filter-button" data-filter="programming" aria-pressed="false"><span class="filter-icon" aria-hidden="true">${icon.gamepad}</span>${esc(copy.filterProgramming)}</button><button class="filter-button" data-filter="audio" aria-pressed="false"><span class="filter-icon" aria-hidden="true"><span class="sound-bars"><i></i><i></i><i></i><i></i><i></i></span></span>${esc(copy.filterAudio)}</button></div>
     <div class="projects-page-grid">${groupBlock("programming", copy.programmingTitle, copy.projectsProgrammingDescription, programming, true)}${groupBlock("audio", copy.audioTitle, copy.projectsAudioDescription, audio, true)}</div>
   </main>`;
@@ -210,16 +194,16 @@ function gamesPage() {
   const width = Number(firstPlayable?.gameWidth) || 1080;
   const height = Number(firstPlayable?.gameHeight) || 1920;
   return `<main id="main" class="games-page wrap">
-    <header class="games-heading"><h1 id="games-page-title">${firstPlayable ? esc(firstPlayable.title) : `${esc(copy.gamesTitleA)} <span class="gradient-text">${esc(copy.gamesTitleB)}</span>`}</h1></header>
+    <header class="games-heading"><h1 id="games-page-title">${firstPlayable ? esc(firstPlayable.title) : `${esc(copy.gamesTitleA)} <span class="gradient-text">${esc(copy.gamesTitleB)}</span>`}</h1><p id="games-page-description" ${firstPlayable ? "hidden" : ""}>${esc(copy.gamesDescription)}</p></header>
     <section class="game-arcade" id="game-arcade" aria-label="Playable games">
       <aside class="game-drawer" id="game-drawer" aria-label="Game list">
-        <div class="game-drawer-heading"><div><h2>Choose a game</h2></div><button class="game-drawer-close" id="game-drawer-close" type="button" aria-label="Close game list">×</button></div>
-        <div class="game-drawer-list">${games.length ? games.map((game) => `<button class="game-choice ${game.id === firstPlayable?.id ? "active" : ""}" type="button" data-game-id="${esc(game.id)}" ${game.gamePath ? `aria-pressed="${game.id === firstPlayable?.id}"` : "disabled title='Playable build not uploaded yet'"}><img src="${esc(projectThumbnail(game))}" alt="" loading="lazy"/><span><strong>${esc(game.title)}</strong><small>${game.gamePath ? esc(copy.gamesPlay) : esc(copy.gameShowcaseLabel)}</small></span>${game.gamePath ? `<span class="game-choice-mark" aria-hidden="true">›</span>` : ""}</button>`).join("") : `<p class="game-list-empty">No playable games available.</p>`}</div>
+        <div class="game-drawer-heading"><div><h2>${esc(copy.gamesReadyTitle)}</h2></div><button class="game-drawer-close" id="game-drawer-close" type="button" aria-label="Close game list">×</button></div>
+        <div class="game-drawer-list">${games.length ? games.map((game) => `<button class="game-choice ${game.id === firstPlayable?.id ? "active" : ""}" type="button" data-game-id="${esc(game.id)}" ${game.gamePath ? `aria-pressed="${game.id === firstPlayable?.id}"` : "disabled title='Playable build not uploaded yet'"}><img src="${esc(projectThumbnail(game))}" alt="" loading="lazy"/><span><strong>${esc(game.title)}</strong><small>${game.gamePath ? esc(copy.gamesPlay) : esc(copy.gameShowcaseLabel)}</small></span>${game.gamePath ? `<span class="game-choice-mark" aria-hidden="true">›</span>` : ""}</button>`).join("") : `<p class="game-list-empty">${esc(copy.gamesEmptyTitle)}</p>`}</div>
         <a class="game-project-link" href="projects.html">${esc(copy.gamesExplore)} ${icon.arrow}</a>
       </aside>
       <button class="game-edge-trigger" id="game-menu-button" type="button" aria-expanded="false" aria-controls="game-drawer" aria-label="Open game list" title="Browse games"><span class="game-edge-arrow" aria-hidden="true">›</span><span class="game-edge-label" aria-hidden="true">Games</span></button>
       <div class="game-stage" id="game-stage">
-        <div class="game-player-area" id="game-player-area">${firstPlayable ? `<iframe class="game-player-frame" id="game-player-frame" src="${esc(firstPlayable.gamePath)}" title="${esc(firstPlayable.title)} playable game" width="${width}" height="${height}" allow="autoplay; fullscreen; gamepad; clipboard-read; clipboard-write" allowfullscreen></iframe>` : `<div class="game-start-screen"><div class="game-start-heading"><h2>Choose a game</h2><p>Select a project to start playing.</p></div><div class="game-start-grid">${games.filter((game) => game.gamePath).map((game) => `<button class="game-launch-choice" type="button" data-game-id="${esc(game.id)}"><img src="${esc(projectThumbnail(game))}" alt="" /><span>${esc(game.title)}</span><b aria-hidden="true">Play&nbsp; ↗</b></button>`).join("")}</div></div>`}</div>
+        <div class="game-player-area" id="game-player-area">${firstPlayable ? `<iframe class="game-player-frame" id="game-player-frame" src="${esc(firstPlayable.gamePath)}" title="${esc(firstPlayable.title)} playable game" width="${width}" height="${height}" allow="autoplay; fullscreen; gamepad; clipboard-read; clipboard-write" allowfullscreen></iframe>` : `<div class="game-start-screen"><div class="game-start-heading"><h2>${esc(games.some((game) => game.gamePath) ? copy.gamesReadyTitle : copy.gamesEmptyTitle)}</h2></div><div class="game-start-grid">${games.filter((game) => game.gamePath).map((game) => `<button class="game-launch-choice" type="button" data-game-id="${esc(game.id)}"><img src="${esc(projectThumbnail(game))}" alt="" /><span><strong>${esc(game.title)}</strong><small class="game-launch-action">${esc(copy.gamesPlay)} ↗</small></span></button>`).join("")}</div></div>`}</div>
         <button class="game-fullscreen" id="game-fullscreen" type="button" aria-label="Enter fullscreen" title="Fullscreen" ${firstPlayable ? "" : "disabled"}>⛶</button>
       </div>
     </section>
@@ -228,7 +212,7 @@ function gamesPage() {
 
 function aboutPage() {
   return `<main id="main" class="page-main wrap"><header class="page-heading"><h1>${esc(copy.aboutTitleA)}${copy.aboutTitleB ? `<br /><span class="gradient-text">${esc(copy.aboutTitleB)}</span>` : ""}</h1><p class="about-lede">${esc(copy.aboutLead)}</p></header>
-    <section class="about-layout"><div class="about-story"><h2>${esc(copy.aboutStoryTitleA)}${copy.aboutStoryTitleB ? `<br />${esc(copy.aboutStoryTitleB)}` : ""}</h2><p>${esc(copy.aboutParagraph1)}</p><p>${esc(copy.aboutParagraph2)}</p>${copy.aboutParagraph3 ? `<p>${esc(copy.aboutParagraph3)}</p>` : ""}<a class="button button-violet" href="projects.html">${esc(copy.aboutButton)} ${icon.arrow}</a>${contactActions("about-contact-actions")}</div></section>
+    <section class="about-layout"><div class="about-story"><h2>${esc(copy.aboutStoryTitleA)}${copy.aboutStoryTitleB ? `<br />${esc(copy.aboutStoryTitleB)}` : ""}</h2><p>${esc(copy.aboutParagraph1)}</p><p>${esc(copy.aboutParagraph2)}</p>${copy.aboutParagraph3 ? `<p>${esc(copy.aboutParagraph3)}</p>` : ""}${copy.aboutParagraph4 ? `<p>${esc(copy.aboutParagraph4)}</p>` : ""}<div class="about-focus"><h3>${esc(copy.focusEyebrow)}</h3><ul class="tag-list">${splitCopy("focusAreas").map((item) => `<li>${esc(item)}</li>`).join("")}</ul></div><a class="button button-violet" href="projects.html">${esc(copy.aboutButton)} ${icon.arrow}</a>${contactActions("about-contact-actions")}</div></section>
   </main>`;
 }
 
@@ -295,6 +279,9 @@ function toggleProject(card) {
       if (!open) frame.contentWindow?.postMessage(JSON.stringify({ event: "command", func: "pauseVideo", args: [] }), "https://www.youtube-nocookie.com");
     } else visual.innerHTML = project ? projectMedia(project, open) : "";
   });
+  if (willExpand) requestAnimationFrame(() => card.scrollIntoView({
+    block: "start", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+  }));
 }
 
 document.querySelectorAll(".project-card").forEach((card) => {
@@ -353,6 +340,9 @@ document.querySelectorAll(".filter-button").forEach((button) => {
     });
     document.querySelectorAll(".projects-page-grid .work-group").forEach((group) => {
       group.hidden = button.dataset.filter !== "all" && group.dataset.category !== button.dataset.filter;
+      if (group.hidden) group.querySelectorAll(".project-video-frame").forEach((frame) => {
+        frame.contentWindow?.postMessage(JSON.stringify({ event: "command", func: "pauseVideo", args: [] }), "https://www.youtube-nocookie.com");
+      });
     });
     document.querySelector(".projects-page-grid")?.classList.toggle("is-filtered", button.dataset.filter !== "all");
   });
@@ -431,6 +421,8 @@ function chooseGame(id) {
   if (nowPlaying) nowPlaying.textContent = game.title;
   const pageTitle = document.querySelector("#games-page-title");
   if (pageTitle) pageTitle.textContent = game.title;
+  const pageDescription = document.querySelector("#games-page-description");
+  if (pageDescription) pageDescription.hidden = true;
   document.querySelectorAll(".game-choice").forEach((button) => {
     const active = button.dataset.gameId === game.id;
     button.classList.toggle("active", active);
