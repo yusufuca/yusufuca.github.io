@@ -13,7 +13,7 @@
       "3D",
       "Fighting"
     ],
-    "description": "A fast-paced 3D party fighting game where characters from different dimensions collide. Built around responsive controls, expressive combat and over-the-top game feel.",
+    "description": "A 3D party fighting game made in Unity for DreamLayer GameJam 2026.",
     "videoUrl": "",
     "itchUrl": "https://yusemuca.itch.io/super-interdimensional-fight-bonanza",
     "gamePath": "games/sifb/index.html",
@@ -35,7 +35,7 @@
       "Unity",
       "C#"
     ],
-    "description": "This project is a Suika Game clone built in Unity as a learning exercise, exploring 2D physics-based gameplay, data-driven design, and mobile input handling.",
+    "description": "A Suika Game clone built in Unity as a learning exercise in 2D physics, data-driven design and mobile input handling.",
     "videoUrl": "https://www.youtube.com/embed/m5ObU97LYxE?si=VwPy3lUYZpZOh_cP",
     "itchUrl": "",
     "gamePath": "games/merge-fruit/index.html",
@@ -66,7 +66,7 @@
       "C#",
       "Game Feel & System Architecture"
     ],
-    "description": "Built as a personal learning journey to dive deep into clean code principles, state machines, and the mechanics of game feel.",
+    "description": "A personal learning project in Unity and C#, covering state machines, gameplay architecture and game feel.",
     "videoUrl": "https://www.youtube.com/embed/P7KOq5rkvFs?si=69s01fo-XmvBisNd",
     "itchUrl": "",
     "gamePath": "",
@@ -96,7 +96,7 @@
       "FMOD",
       "State Machine Logic"
     ],
-    "description": "An interactive audio demo designed in Unity to showcase adaptive music implementation. By utilizing vertical layering and horizontal resequencing techniques, the system dynamically shifts musical stems and themes in response to changing gameplay states.\r\n\r\nDevelopment Note: All audio design, DSP calculations, and acoustic logic in this project were developed entirely by me. Surrounding gameplay elements (player movement, combat triggers) were AI-assisted to quickly build an interactive testbed for the audio systems — the focus here is the sound architecture. For a from-scratch implementation of gameplay systems, see my Roguelite Demo.",
+    "description": "An adaptive music demo built in Unity and FMOD. It uses vertical layering and horizontal resequencing to change musical stems and sections in response to gameplay states.\n\nI worked on the audio design, DSP calculations and acoustic logic. Player movement and combat triggers were built with AI assistance to test the audio systems. The Roguelite Demo covers my separate work on gameplay programming.",
     "textLinks": [
       {
         "text": "Roguelite Demo",
@@ -127,7 +127,7 @@
       "C#",
       "FMOD Middleware"
     ],
-    "description": "A runtime room acoustics and source occlusion system built in Unity and FMOD. Instead of relying on static, pre-placed trigger volumes, the core flood-fill algorithm and 6-axis raycasting dynamically detect room geometry, total volume, and material hardness every frame. These physical parameters are calculated in real-time and mapped directly into FMOD DSP parameters—specifically driving Reverb Time, Early/Late Delay, Diffusion, High Cut, and Low Gain. \r\n\r\nDevelopment Note: All audio design, DSP calculations, and acoustic logic in this project were developed entirely by me. Surrounding gameplay elements (player movement, combat triggers) were AI-assisted to quickly build an interactive testbed for the audio systems — the focus here is the sound architecture. For a from-scratch implementation of gameplay systems, see my Roguelite Demo.",
+    "description": "A room acoustics and source occlusion demo built in Unity and FMOD. Flood-fill and six-axis raycasting estimate room geometry, volume and material hardness at runtime. These values control FMOD parameters for reverb time, early and late delay, diffusion, high cut and low gain.\n\nI worked on the audio design, DSP calculations and acoustic logic. Player movement and combat triggers were built with AI assistance to test the audio systems. The Roguelite Demo covers my separate work on gameplay programming.",
     "textLinks": [
       {
         "text": "Roguelite Demo",
@@ -157,7 +157,7 @@
       "Audio",
       "Sound Redesign"
     ],
-    "description": "A linear sound redesign for a God of War combat sequence.\r\n\r\n\r\n\r\nNote: Source materials were curated from the GDC (Sonniss) Audio Archives.",
+    "description": "A linear sound redesign for a God of War combat sequence.\n\nSource audio: GDC (Sonniss) Audio Archives.",
     "videoUrl": "https://www.youtube.com/embed/yrkq4w5Wp58?si=C1kDiS21KeTL2twb",
     "itchUrl": "",
     "gamePath": "",
@@ -181,7 +181,7 @@
       "Audio",
       "Sound Redesign"
     ],
-    "description": "A linear sound redesign for the Abyss Watchers cinematic in Dark Souls 3.\r\n\r\nNote: Source materials were curated from the GDC (Sonniss) Audio Archives.",
+    "description": "A linear sound redesign for the Abyss Watchers cinematic in Dark Souls 3.\n\nSource audio: GDC (Sonniss) Audio Archives.",
     "videoUrl": "https://www.youtube.com/embed/1H62ik3NMT8?si=Sb_9a59pkTCwEe_X",
     "itchUrl": "",
     "gamePath": "",
@@ -195,7 +195,7 @@
   },
   {
     "id": "stardew-audio",
-    "title": "Stardew Valley - SOUND REDESIGN",
+    "title": "Stardew Valley - Sound Redesign",
     "category": "audio",
     "subtitle": "Sound Redesign",
     "date": "2026-07-31",
@@ -205,7 +205,7 @@
       "Audio",
       "Sound Redesign"
     ],
-    "description": "A linear sound redesign for Stardew Valley's harvesting and wood-chopping mechanics.\r\n\r\nNote: Source materials were curated from the GDC (Sonniss) Audio Archives.",
+    "description": "A linear sound redesign for harvesting and wood-chopping in Stardew Valley.\n\nSource audio: GDC (Sonniss) Audio Archives.",
     "videoUrl": "https://www.youtube.com/embed/HvNN7jzqtrU?si=Fvw5vAwc9cyid_4B",
     "itchUrl": "",
     "gamePath": "",

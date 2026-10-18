@@ -4,30 +4,30 @@ const [site, projects] = await Promise.all([
 ]);
 
 const copy = {
-  navHome: "Home", navProjects: "Projects", navGames: "Games", navAbout: "About", navTalk: "Let’s talk",
-  heroEyebrow: "GAME DEVELOPER · SOUND ENGINEERING BACKGROUND", heroTitleA: "Game Developer", heroTitleB: "Sound Engineer",
-  heroLead: "I build responsive, playful game systems — and the audio that brings them to life.",
-  heroButton: "Check out my work", heroAboutButton: "Read my full profile",
-  skills: "Unity, C#, Game Feel, Systems Design, Audio, FMOD",
-  showreelTitle: "Selected work", showreelSubtitle: "CODE · SOUND · FEEL", showreelCaptionA: "A world of small details", showreelCaptionB: "and big moments.",
-  showreelFooter: "Game programming + game audio", showreelNote: "A quick look at the worlds and systems I like to build.",
-  workEyebrow: "THE WORK", workTitle: "Two sides of the same experience.", workDescription: "From how a character moves to how a world sounds, I care about the details players feel.",
-  programmingTitle: "Game Programming", programmingDescription: "Game systems, mechanics, tools and prototypes.", audioTitle: "Game Audio", audioDescription: "Music, sound design and audio implementation.",
-  projectsEyebrow: "PROJECTS", projectsTitleA: "Systems that play.", projectsTitleB: "Sound that stays.", projectsDescription: "",
-  filterAll: "All projects", filterProgramming: "Game Programming", filterAudio: "Game Audio", projectsProgrammingDescription: "Mechanics, systems, tools and prototypes.", projectsAudioDescription: "Music, sound design and implementation.",
-  gamesEyebrow: "GAMES", gamesTitleA: "Playable", gamesTitleB: "game projects", gamesDescription: "",
-  gamesReadyTitle: "Ready to play.", gamesReadyDescription: "Choose a game below to launch its WebGL build here or open its itch.io page.", gamesEmptyTitle: "Playable builds are on the way.", gamesEmptyDescription: "Upload a WebGL build in the local admin panel or add an itch.io link to a project.",
-  gamesExplore: "Explore the projects", gamesPlay: "Play WebGL", gamesItch: "Open on itch.io", gameProjectLabel: "GAME PROJECT", gameShowcaseLabel: "Project showcase",
-  aboutEyebrow: "ABOUT", aboutTitleA: "Hi, I’m Yusuf.", aboutTitleB: "I build game experiences.", aboutLead: "Game developer with a background in sound engineering.",
-  aboutStoryEyebrow: "THE SHORT VERSION", aboutStoryTitleA: "From shaping sound", aboutStoryTitleB: "to shaping play.",
-  aboutParagraph1: "Sound engineering gave me a close ear for timing, clarity and emotion. Game development lets me bring those instincts into interactive systems: the controls, feedback and audio that make a world feel responsive.",
-  aboutParagraph2: "I work across Unity and C#, gameplay systems, game feel, FMOD and audio implementation. I enjoy finding the connection between what a game does and what a player feels.", aboutParagraph3: "", aboutParagraph4: "",
-  aboutButton: "See what I’m building", focusEyebrow: "FOCUS AREAS", focusAreas: "Unity & C#, Gameplay systems, Responsive controls, Game feel, FMOD, Audio implementation, Sound design",
-  principlesEyebrow: "WHAT I CARE ABOUT", principlesText: "Every interaction has a rhythm. I like making that rhythm feel clear, playful and satisfying — through code, sound, or the way they work together.",
-  footerEyebrow: "HAVE A PROJECT IN MIND?", footerTitleA: "Let’s make something", footerTitleB: "feel good.", footerDescription: "Game programming, game audio, and the details that bring them together.",
-  footerEmailButton: "Email Yusuf", footerNote: "Built with curiosity and a little bit of glow.", footerAbout: "More about me", cvButton: "Download CV", dialogEyebrow: "SHOWREEL", dialogTitle: "A reel of selected work",
-  contactMissing: "Contact details can be added in the admin panel.", showreelReady: "The showreel is ready to watch.",
-  showreelMissing: "Add a YouTube or Vimeo URL in the admin panel to enable video playback.", showreelAction: "Watch the showreel", showreelBrowse: "Browse the projects",
+  navHome: "Home", navProjects: "Projects", navGames: "Games", navAbout: "About", navTalk: "Contact",
+  heroEyebrow: "GAME DEVELOPMENT · SOUND ENGINEERING", heroTitleA: "Game Developer", heroTitleB: "Sound Engineer",
+  heroLead: "I'm a junior game developer with a background in live sound engineering and studio production. I currently work on game projects in Unity and C#, and audio implementation with FMOD.",
+  heroButton: "Projects", heroAboutButton: "About",
+  skills: "Unity, C#, Game Feel, Systems Design, Technical Audio Design, FMOD",
+  showreelTitle: "A Study in Game Feel & Systems Architecture", showreelSubtitle: "Unity / C#", showreelCaptionA: "Gameplay systems demo", showreelCaptionB: "Unity / C#",
+  showreelFooter: "Game programming and game audio", showreelNote: "",
+  workEyebrow: "PROJECTS", workTitle: "Projects", workDescription: "Game development and audio projects.",
+  programmingTitle: "Game Programming", programmingDescription: "Unity and C# projects, gameplay systems and prototypes.", audioTitle: "Game Audio", audioDescription: "Sound redesign, music and audio implementation.",
+  projectsEyebrow: "PROJECTS", projectsTitleA: "Projects", projectsTitleB: "", projectsDescription: "Game development and audio projects. Select a project for details.",
+  filterAll: "All projects", filterProgramming: "Game Programming", filterAudio: "Game Audio", projectsProgrammingDescription: "Unity and C# projects, gameplay systems and prototypes.", projectsAudioDescription: "Sound redesign, music and audio implementation.",
+  gamesEyebrow: "GAMES", gamesTitleA: "Playable", gamesTitleB: "games", gamesDescription: "",
+  gamesReadyTitle: "Choose a game", gamesReadyDescription: "Select a game to play in the browser.", gamesEmptyTitle: "No playable games available", gamesEmptyDescription: "There are no browser builds listed here.",
+  gamesExplore: "Project details", gamesPlay: "Play WebGL", gamesItch: "Open on itch.io", gameProjectLabel: "GAME PROJECT", gameShowcaseLabel: "Project details",
+  aboutEyebrow: "ABOUT", aboutTitleA: "About", aboutTitleB: "", aboutLead: "Junior game developer with a background in live sound engineering and studio production.",
+  aboutStoryEyebrow: "BACKGROUND", aboutStoryTitleA: "Background", aboutStoryTitleB: "",
+  aboutParagraph1: "I'm currently learning game development through projects in Unity and C#, with a focus on gameplay systems and game architecture.",
+  aboutParagraph2: "My background includes front-of-house mixing, concert productions and studio work, with practical experience in signal flow, DSP and acoustics.", aboutParagraph3: "Alongside game programming, I work on audio projects using Unity and FMOD. These include procedural acoustics, source occlusion and adaptive music systems. I'm interested in continuing to work with both game programming and audio.", aboutParagraph4: "",
+  aboutButton: "Projects", focusEyebrow: "TOOLS AND TOPICS", focusAreas: "Unity & C#, Gameplay systems, State machines, Game feel, FMOD, Audio implementation, Sound design",
+  principlesEyebrow: "CURRENT WORK", principlesText: "Learning gameplay programming in Unity and C#, alongside game audio projects in FMOD.",
+  footerEyebrow: "CONTACT", footerTitleA: "Contact", footerTitleB: "", footerDescription: "Email, GitHub and LinkedIn.",
+  footerEmailButton: "Email", footerNote: "", footerAbout: "About", cvButton: "Download CV", dialogEyebrow: "SHOWREEL", dialogTitle: "Gameplay systems demo",
+  contactMissing: "Contact details are not available.", showreelReady: "Gameplay systems demo in Unity and C#.",
+  showreelMissing: "No video available.", showreelAction: "Watch video", showreelBrowse: "Projects",
   ...site.copy,
 };
 const splitCopy = (key) => (copy[key] || "").split(",").map((item) => item.trim()).filter(Boolean);
@@ -109,7 +109,7 @@ function projectMedia(project, expanded) {
     return `<iframe class="project-video-frame" src="${esc(playerUrl)}" title="${esc(project.title)} video" loading="eager" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><div class="project-video-cover"><img src="${esc(projectThumbnail(project))}" alt="${esc(project.alt)}" width="800" height="450" /></div>`;
   }
   if (!expanded) return `<img src="${esc(projectThumbnail(project))}" alt="${esc(project.alt)}" loading="lazy" width="800" height="600" />`;
-  return `<div class="video-placeholder"><span>▶</span><p>Add a YouTube video URL in the admin panel to show the video here.</p></div>`;
+  return `<div class="video-placeholder"><span>▶</span><p>No video available.</p></div>`;
 }
 
 function projectCard(project, expanded = false) {
@@ -182,7 +182,7 @@ function homePage() {
       <div class="hero-copy"><h1>${esc(copy.heroTitleA)}<br /><span class="gradient-text">${esc(copy.heroTitleB)}</span></h1>
         <p class="hero-lede">${esc(copy.heroLead)}</p>
         <ul class="tag-list skill-pills" aria-label="Core skills">${splitCopy("skills").map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
-        <div class="hero-actions"><a class="button button-violet" href="projects.html">${esc(copy.heroButton || "Check out my work")} ${icon.arrow}</a><a class="button button-violet" href="about.html">${esc(copy.heroAboutButton || "Read my full profile")} ${icon.arrow}</a></div>
+        <div class="hero-actions"><a class="button button-violet" href="projects.html">${esc(copy.heroButton || "Projects")} ${icon.arrow}</a><a class="button button-violet" href="about.html">${esc(copy.heroAboutButton || "About")} ${icon.arrow}</a></div>
       </div>
       <div class="showreel-wrap"><div class="showreel-card">
         ${showreelPlayerUrl ? `<iframe class="showreel-frame" src="${esc(showreelPlayerUrl)}" title="${esc(copy.dialogTitle)}" loading="eager" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>` : ""}
@@ -197,7 +197,7 @@ function homePage() {
 function projectsPage() {
   const programming = projects.filter((item) => item.category === "programming");
   const audio = projects.filter((item) => item.category === "audio");
-  return `<main id="main" class="page-main wrap"><header class="page-heading"><h1>${esc(copy.projectsTitleA)}<br /><span class="gradient-text">${esc(copy.projectsTitleB)}</span></h1></header>
+  return `<main id="main" class="page-main wrap"><header class="page-heading"><h1>${esc(copy.projectsTitleA)}${copy.projectsTitleB ? `<br /><span class="gradient-text">${esc(copy.projectsTitleB)}</span>` : ""}</h1></header>
     <div class="filter-row" role="group" aria-label="Filter projects"><button class="filter-button active" data-filter="all" aria-pressed="true">${esc(copy.filterAll)}</button><button class="filter-button" data-filter="programming" aria-pressed="false"><span class="filter-icon" aria-hidden="true">${icon.gamepad}</span>${esc(copy.filterProgramming)}</button><button class="filter-button" data-filter="audio" aria-pressed="false"><span class="filter-icon" aria-hidden="true"><span class="sound-bars"><i></i><i></i><i></i><i></i><i></i></span></span>${esc(copy.filterAudio)}</button></div>
     <div class="projects-page-grid">${groupBlock("programming", copy.programmingTitle, copy.projectsProgrammingDescription, programming, true)}${groupBlock("audio", copy.audioTitle, copy.projectsAudioDescription, audio, true)}</div>
   </main>`;
@@ -214,7 +214,7 @@ function gamesPage() {
     <section class="game-arcade" id="game-arcade" aria-label="Playable games">
       <aside class="game-drawer" id="game-drawer" aria-label="Game list">
         <div class="game-drawer-heading"><div><h2>Choose a game</h2></div><button class="game-drawer-close" id="game-drawer-close" type="button" aria-label="Close game list">×</button></div>
-        <div class="game-drawer-list">${games.length ? games.map((game) => `<button class="game-choice ${game.id === firstPlayable?.id ? "active" : ""}" type="button" data-game-id="${esc(game.id)}" ${game.gamePath ? `aria-pressed="${game.id === firstPlayable?.id}"` : "disabled title='Playable build not uploaded yet'"}><img src="${esc(projectThumbnail(game))}" alt="" loading="lazy"/><span><strong>${esc(game.title)}</strong><small>${game.gamePath ? esc(copy.gamesPlay) : esc(copy.gameShowcaseLabel)}</small></span>${game.gamePath ? `<span class="game-choice-mark" aria-hidden="true">›</span>` : ""}</button>`).join("") : `<p class="game-list-empty">Mark a project as playable in the admin panel to show it here.</p>`}</div>
+        <div class="game-drawer-list">${games.length ? games.map((game) => `<button class="game-choice ${game.id === firstPlayable?.id ? "active" : ""}" type="button" data-game-id="${esc(game.id)}" ${game.gamePath ? `aria-pressed="${game.id === firstPlayable?.id}"` : "disabled title='Playable build not uploaded yet'"}><img src="${esc(projectThumbnail(game))}" alt="" loading="lazy"/><span><strong>${esc(game.title)}</strong><small>${game.gamePath ? esc(copy.gamesPlay) : esc(copy.gameShowcaseLabel)}</small></span>${game.gamePath ? `<span class="game-choice-mark" aria-hidden="true">›</span>` : ""}</button>`).join("") : `<p class="game-list-empty">No playable games available.</p>`}</div>
         <a class="game-project-link" href="projects.html">${esc(copy.gamesExplore)} ${icon.arrow}</a>
       </aside>
       <button class="game-edge-trigger" id="game-menu-button" type="button" aria-expanded="false" aria-controls="game-drawer" aria-label="Open game list" title="Browse games"><span class="game-edge-arrow" aria-hidden="true">›</span><span class="game-edge-label" aria-hidden="true">Games</span></button>
@@ -227,8 +227,8 @@ function gamesPage() {
 }
 
 function aboutPage() {
-  return `<main id="main" class="page-main wrap"><header class="page-heading"><h1>${esc(copy.aboutTitleA)}<br /><span class="gradient-text">${esc(copy.aboutTitleB)}</span></h1><p class="about-lede">${esc(copy.aboutLead)}</p></header>
-    <section class="about-layout"><div class="about-story"><h2>${esc(copy.aboutStoryTitleA)}<br />${esc(copy.aboutStoryTitleB)}</h2><p>${esc(copy.aboutParagraph1)}</p><p>${esc(copy.aboutParagraph2)}</p>${copy.aboutParagraph3 ? `<p>${esc(copy.aboutParagraph3)}</p>` : ""}<a class="button button-violet" href="projects.html">${esc(copy.aboutButton)} ${icon.arrow}</a>${contactActions("about-contact-actions")}</div></section>
+  return `<main id="main" class="page-main wrap"><header class="page-heading"><h1>${esc(copy.aboutTitleA)}${copy.aboutTitleB ? `<br /><span class="gradient-text">${esc(copy.aboutTitleB)}</span>` : ""}</h1><p class="about-lede">${esc(copy.aboutLead)}</p></header>
+    <section class="about-layout"><div class="about-story"><h2>${esc(copy.aboutStoryTitleA)}${copy.aboutStoryTitleB ? `<br />${esc(copy.aboutStoryTitleB)}` : ""}</h2><p>${esc(copy.aboutParagraph1)}</p><p>${esc(copy.aboutParagraph2)}</p>${copy.aboutParagraph3 ? `<p>${esc(copy.aboutParagraph3)}</p>` : ""}<a class="button button-violet" href="projects.html">${esc(copy.aboutButton)} ${icon.arrow}</a>${contactActions("about-contact-actions")}</div></section>
   </main>`;
 }
 
