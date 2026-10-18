@@ -24,6 +24,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Set up Python for CV preview
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Generate CV preview and clickable links
+        run: |
+          python -m pip install -r scripts/cv-requirements.txt
+          python scripts/prepare-cv.py
       - name: Prepare site
         run: node scripts/prepare-dist.mjs
       - name: Upload Pages artifact

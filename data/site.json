@@ -93,5 +93,82 @@
   },
   "cvUrl": "assets/yusuf-semih-uca-cv-2026-10.pdf",
   "cvPreviewUrl": "assets/yusuf-semih-uca-cv-2026-10-preview.webp",
-  "cvPreviewFor": "assets/yusuf-semih-uca-cv-2026-10.pdf"
+  "cvPreviewFor": "assets/yusuf-semih-uca-cv-2026-10.pdf",
+  "cvPreviewLinks": [
+    {
+      "url": "mailto:yusemuca@gmail.com",
+      "label": "mailto:yusemuca@gmail.com",
+      "left": 22.84656,
+      "top": 13.422184,
+      "width": 13.583859,
+      "height": 1.466938
+    },
+    {
+      "url": "https://github.com/yusufuca",
+      "label": "github.com/yusufuca",
+      "left": 9.407407,
+      "top": 15.797792,
+      "width": 13.171311,
+      "height": 1.472877
+    },
+    {
+      "url": "https://yusufuca.github.io/",
+      "label": "yusufuca.github.io/",
+      "left": 25.098559,
+      "top": 15.797792,
+      "width": 11.363678,
+      "height": 1.472877
+    },
+    {
+      "url": "https://github.com/yusufuca/RogueLiteGameDemo",
+      "label": "github.com/yusufuca/RogueLiteGameDemo",
+      "left": 84.90012,
+      "top": 45.37411,
+      "width": 8.044324,
+      "height": 2.256827
+    },
+    {
+      "url": "https://yusemuca.itch.io/super-interdimensional-fight-bonanza",
+      "label": "yusemuca.itch.io/super-interdimensional-fight-bonanza",
+      "left": 86.521302,
+      "top": 52.192104,
+      "width": 6.423142,
+      "height": 2.256827
+    },
+    {
+      "url": "https://github.com/yusufuca/16BarLogicGame",
+      "label": "github.com/yusufuca/16BarLogicGame",
+      "left": 84.90012,
+      "top": 60.578,
+      "width": 8.044324,
+      "height": 2.256827
+    },
+    {
+      "url": "https://github.com/yusufuca/DSP-DEMO",
+      "label": "github.com/yusufuca/DSP-DEMO",
+      "left": 84.90012,
+      "top": 65.828093,
+      "width": 8.044324,
+      "height": 2.256827
+    },
+    {
+      "url": "https://github.com/yusufuca/MergeFruits",
+      "label": "github.com/yusufuca/MergeFruits",
+      "left": 84.90012,
+      "top": 71.078186,
+      "width": 8.044324,
+      "height": 2.256827
+    },
+    {
+      "url": "https://www.linkedin.com/in/yusuf-semih-uca-40634b251/",
+      "label": "www.linkedin.com/in/yusuf-semih-uca-40634b251/",
+      "left": 86.348206,
+      "top": 96.28339,
+      "width": 6.596239,
+      "height": 1.544145
+    }
+  ],
+  "cvPreviewVersion": "600f2be5e945",
+  "cvPreviewWidth": 1500,
+  "cvPreviewHeight": 2122
 }

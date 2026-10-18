@@ -34,6 +34,12 @@ Edit `data/site.json` to add your GitHub, LinkedIn, itch.io and YouTube URLs, yo
 
 ## Deploy
 
+### Update the CV
+
+Replace the PDF referenced by `cvUrl` in `data/site.json` (or update that path to a new PDF), then push. GitHub Actions automatically regenerates the preview image and extracts the clickable PDF links before deployment. Multiple pages are supported. Links must be actual clickable links in the PDF, not just printed URL text.
+
+For a local preview, run `python -m pip install -r scripts/cv-requirements.txt`, then `python scripts/prepare-cv.py` before `node scripts/prepare-dist.mjs`. Do not edit `cvPreviewLinks` manually; it is generated from the PDF.
+
 The included GitHub Actions workflow prepares and deploys `dist/` to GitHub Pages whenever code is pushed to `main`. In the GitHub repository, choose **Settings → Pages → GitHub Actions** as the build source. A personal site repository must be named `<your-github-username>.github.io`; its address is `https://<your-github-username>.github.io/`. A regular project repository uses `https://<your-github-username>.github.io/<repository-name>/`. GitHub Pages does not use a `.github` address suffix. GitHub blocks individual files over 100 MiB and limits a published Pages site to 1 GB, so large Unity builds may need optimization or a different game host.
 
 ## Structure

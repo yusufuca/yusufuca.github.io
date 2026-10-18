@@ -212,10 +212,18 @@ function gamesPage() {
 function cvPreview() {
   if (!site.cvUrl) return "";
   const previewImage = site.cvPreviewFor === site.cvUrl ? site.cvPreviewUrl : "";
-  const image = previewImage ? `<img class="cv-preview-image" src="${esc(previewImage)}" alt="${esc(site.name)} CV — full page preview" width="1489" height="2105" loading="lazy" />` : "";
+  const previewSrc = previewImage && site.cvPreviewVersion ? `${previewImage}?v=${encodeURIComponent(site.cvPreviewVersion)}` : previewImage;
+  const image = previewImage ? `<img class="cv-preview-image" src="${esc(previewSrc)}" alt="${esc(site.name)} CV — full page preview" width="${Number(site.cvPreviewWidth) || 1489}" height="${Number(site.cvPreviewHeight) || 2105}" loading="lazy" />` : "";
+  const pdfLinks = (Array.isArray(site.cvPreviewLinks) ? site.cvPreviewLinks : []).filter((link) =>
+    /^(https?:|mailto:)/i.test(link.url) && ["left", "top", "width", "height"].every((key) => Number.isFinite(Number(link[key])))
+  ).map((link) => {
+    const percent = (key) => Math.min(100, Math.max(0, Number(link[key])));
+    const target = /^https?:/i.test(link.url) ? ' target="_blank" rel="noopener noreferrer"' : "";
+    return `<a class="cv-preview-link" href="${esc(link.url)}" aria-label="CV link: ${esc(link.label)}" title="${esc(link.label)}" style="left:${percent("left")}% ;top:${percent("top")}%;width:${percent("width")}%;height:${percent("height")}%"${target}></a>`;
+  }).join("");
   return `<section class="cv-preview ${previewImage ? "has-image-preview" : ""}" aria-labelledby="cv-preview-title">
     <header class="cv-preview-heading"><h2 id="cv-preview-title">CV</h2><div class="cv-preview-actions"><a class="footer-utility-button" href="${esc(site.cvUrl)}" target="_blank" rel="noreferrer">Open PDF ${icon.arrow}</a><a class="footer-utility-button" href="${esc(site.cvUrl)}" download>${esc(copy.cvButton)}</a></div></header>
-    <div class="cv-document-shell">${previewImage ? `<div class="cv-image-preview"><button class="cv-preview-zoom footer-utility-button" type="button" aria-pressed="false">Enlarge preview</button><div class="cv-image-scroll" tabindex="0" role="region" aria-label="Scrollable CV preview">${image}</div></div>` : `<object class="cv-pdf-object" data="${esc(site.cvUrl)}#view=FitH" type="application/pdf" aria-label="${esc(site.name)} CV PDF preview"><p class="cv-preview-unavailable">Open the PDF to view this CV.</p></object>`}</div>
+    <div class="cv-document-shell">${previewImage ? `<div class="cv-image-preview"><button class="cv-preview-zoom footer-utility-button" type="button" aria-pressed="false">Enlarge preview</button><div class="cv-image-scroll" tabindex="0" role="region" aria-label="Scrollable CV preview"><div class="cv-preview-page">${image}${pdfLinks}</div></div></div>` : `<object class="cv-pdf-object" data="${esc(site.cvUrl)}#view=FitH" type="application/pdf" aria-label="${esc(site.name)} CV PDF preview"><p class="cv-preview-unavailable">Open the PDF to view this CV.</p></object>`}</div>
   </section>`;
 }
 
