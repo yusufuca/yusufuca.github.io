@@ -151,7 +151,7 @@ function projectAction(link) {
 function groupBlock(category, title, subtitle, items, compact = false) {
   return `<section class="work-group ${compact ? "work-group-compact" : ""}" data-category="${category}">
     <div class="group-heading"><span class="group-icon" aria-hidden="true">${category === "programming" ? icon.gamepad : "<span class='sound-bars'><i></i><i></i><i></i><i></i><i></i></span>"}</span><div><h2>${esc(title)}</h2><p>${esc(subtitle)}</p></div></div>
-    ${compact ? `<p class="category-overview">${esc(category === "programming" ? copy.projectsProgrammingDetails : copy.projectsAudioDetails)}</p>` : ""}
+    ${compact && (category === "programming" ? copy.projectsProgrammingDetails : copy.projectsAudioDetails) ? `<p class="category-overview">${esc(category === "programming" ? copy.projectsProgrammingDetails : copy.projectsAudioDetails)}</p>` : ""}
     <div class="project-grid">${items.map((project) => projectCard(project)).join("")}</div>
   </section>`;
 }

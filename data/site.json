@@ -86,10 +86,10 @@
     "showreelAction": "Watch video",
     "showreelBrowse": "Projects",
     "aboutParagraph3": "Alongside gameplay programming, I continue working with interactive audio using FMOD. My technical audio projects include adaptive music systems, procedural room acoustics, reverb, and source occlusion. This work allows me to apply my professional audio experience in a game development environment.",
-    "aboutParagraph4": "My long-term goal is to become a stronger software developer while continuing to build on my background in audio engineering. I'm particularly interested in the intersection of gameplay systems, real-time audio, and technical implementation.",
+    "aboutParagraph4": "",
     "cvButton": "Download CV",
-    "projectsProgrammingDetails": "Unity and C# projects covering gameplay programming, game architecture and development tools. This section also includes FMOD projects on adaptive music and procedural acoustics. Select a project for its video, implementation notes and source links.",
-    "projectsAudioDetails": "Linear sound redesigns for gameplay and cinematic sequences. Select a project to watch the video and read its production notes and source-audio credits."
+    "projectsProgrammingDetails": "",
+    "projectsAudioDetails": ""
   },
   "cvUrl": "assets/yusuf-semih-uca-cv-2026-10.pdf",
   "cvPreviewUrl": "assets/yusuf-semih-uca-cv-2026-10-preview.webp",
