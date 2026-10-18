@@ -55,7 +55,7 @@ function header(active) {
 }
 
 function footer() {
-  return `<footer class="site-footer" id="contact"><div class="wrap footer-inner"><div class="footer-bottom"><a class="brand brand-compact" href="index.html"><span class="brand-name">${esc(site.name)}</span><span class="brand-role">${esc(site.role)}</span></a>${copy.footerNote ? `<span class="footer-note">${esc(copy.footerNote)}</span>` : ""}${contactActions()}</div></div></footer>`;
+  return `<footer class="site-footer" id="contact"><div class="wrap footer-inner"><div class="footer-bottom">${copy.footerNote ? `<span class="footer-note">${esc(copy.footerNote)}</span>` : ""}${contactActions()}</div></div></footer>`;
 }
 
 function tags(items) {

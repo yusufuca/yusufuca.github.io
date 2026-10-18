@@ -215,9 +215,8 @@ to{opacity:1;transform:translateY(0)}
 .footer-inner h2{font-size:clamp(1.8rem,4vw,2.65rem);margin-bottom:9px}
 .footer-inner>div:first-child p{margin:0}
 .footer-action{display:flex;justify-content:center;margin:23px 0 42px}
-.footer-bottom{display:flex;align-items:center;justify-content:space-between;gap:18px;padding-top:20px;border-top:1px solid var(--line);font-size:.75rem;color:var(--accent)}
-.footer-bottom>a:last-child{color:var(--text)}
-.footer-contact-actions{display:flex;align-items:center;gap:9px}
+.footer-bottom{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding-top:20px;border-top:1px solid var(--line);font-size:.75rem;color:var(--accent)}
+.footer-contact-actions{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;max-width:100%;gap:9px}
 .footer-social-links{display:flex;align-items:center;gap:8px}
 .footer-social-link{width:40px;height:38px;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:9px;transition:background .18s,border-color .18s,color .18s,transform .18s;background:var(--panel-2);color:var(--text)}
 .footer-social-link:hover{transform:translateY(-1px);background:var(--button);color:var(--ink);border-color:var(--line-strong)}
@@ -308,15 +307,11 @@ to{opacity:1;transform:translateY(0)}
 .about-story h2{font-size:1.8rem}
 .principle-card{padding:23px;margin-top:15px;background:var(--panel)}
 .footer-inner{padding-top:22px}
-.footer-bottom{flex-wrap:wrap}
-.footer-bottom>span{order:3;flex-basis:100%;text-align:center}
-.footer-bottom>a:last-child{margin-left:auto}
-.footer-bottom{display:grid;grid-template-columns:minmax(0,1fr);gap:13px}
-.footer-bottom>.brand{grid-column:1;grid-row:1}
-.footer-contact-actions{grid-column:1;grid-row:2;justify-self:center;max-width:100%;gap:7px}
+.footer-bottom{gap:13px}
+.footer-bottom>span{text-align:center}
+.footer-contact-actions{gap:7px}
 .footer-social-links{gap:7px}
-.footer-bottom>a:last-child{grid-column:1;grid-row:3}
-.footer-bottom>.footer-note{grid-column:1/-1;grid-row:3;text-align:center}
+.footer-bottom>.footer-note{text-align:center}
 }
 
 @media(max-width:420px){.wrap{width:calc(100% - 28px)}
@@ -433,7 +428,7 @@ to{opacity:1;transform:translateY(0)}
 .game-launch-choice>span{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px}
 .game-launch-choice>span>strong{font:inherit}
 .game-launch-action{font-size:.7rem;color:var(--text);white-space:nowrap}
-@media(max-width:600px){.projects-page-grid.is-filtered .project-grid{grid-template-columns:1fr}.project-card{scroll-margin-top:98px;background:var(--panel-2)}.footer-utility-button.email-copy-button.contact-button{padding-inline:8px}.site-footer .footer-contact-actions{flex-wrap:wrap;justify-content:flex-start}}
+@media(max-width:600px){.projects-page-grid.is-filtered .project-grid{grid-template-columns:1fr}.project-card{scroll-margin-top:98px;background:var(--panel-2)}.footer-utility-button.email-copy-button.contact-button{padding-inline:8px}.site-footer .footer-contact-actions{justify-content:center}}
 
 /* Dark glass: translucent surfaces and reflected edges, with flat accent colors. */
 :root{--glass-pane:rgba(20,30,44,.36);--glass-card:rgba(11,18,28,.4);--glass-border:rgba(172,197,230,.18);--glass-highlight:rgba(231,241,255,.2);--glass-shadow:inset 0 1px 0 rgba(241,247,255,.07),inset 1px 0 0 rgba(221,235,255,.025),0 18px 42px rgba(0,0,0,.25)}
