@@ -162,17 +162,16 @@ function homePage() {
   const showreelPlayerUrl = showreelEmbed ? `${showreelEmbed}&playsinline=1&controls=1` : "";
   return `<main id="main">
     <section class="hero wrap">
-      <div class="hero-copy"><h1>${esc(copy.heroTitleA)}<br /><span class="gradient-text">${esc(copy.heroTitleB)}</span></h1>
+      <div class="hero-copy"><h1>${esc(copy.heroTitleA)}<br /><span class="accent-text">${esc(copy.heroTitleB)}</span></h1>
         <p class="hero-lede">${esc(copy.heroLead)}</p>
-        <ul class="tag-list skill-pills" aria-label="Core skills">${splitCopy("skills").map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
-        <div class="hero-actions"><a class="button button-violet" href="projects.html">${esc(copy.heroButton || "Projects")} ${icon.arrow}</a><a class="button button-violet" href="about.html">${esc(copy.heroAboutButton || "About")} ${icon.arrow}</a></div>
+        <div class="hero-actions"><a class="button button-primary" href="projects.html">${esc(copy.heroButton || "Projects")} ${icon.arrow}</a><a class="button button-primary" href="about.html">${esc(copy.heroAboutButton || "About")} ${icon.arrow}</a></div>
       </div>
-      <div class="showreel-wrap"><div class="featured-project-heading"><h2>${esc(copy.showreelTitle)}</h2><p class="eyebrow">${esc(copy.showreelSubtitle)}</p></div><div class="showreel-card">
+      <div class="showreel-wrap"><div class="showreel-card">
         ${showreelPlayerUrl ? `<iframe class="showreel-frame" src="${esc(showreelPlayerUrl)}" title="${esc(copy.dialogTitle)}" loading="eager" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>` : ""}
-      </div><p class="featured-project-footer">${esc(copy.showreelFooter)}</p><p class="featured-project-description">${esc(copy.showreelNote)}</p></div>
+      </div></div>
     </section>
     <section class="work-section wrap" id="work">
-      <header class="section-intro"><h2>${esc(copy.workTitle)}</h2><p>${esc(copy.workDescription)}</p></header>
+      <header class="section-intro"><h2>${esc(copy.workTitle)}</h2></header>
       <div class="work-columns">${groupBlock("programming", copy.programmingTitle, copy.programmingDescription, programming)}${groupBlock("audio", copy.audioTitle, copy.audioDescription, audio)}</div>
     </section>
   </main>`;
@@ -181,7 +180,7 @@ function homePage() {
 function projectsPage() {
   const programming = projects.filter((item) => item.category === "programming");
   const audio = projects.filter((item) => item.category === "audio");
-  return `<main id="main" class="page-main wrap"><header class="page-heading"><h1>${esc(copy.projectsTitleA)}${copy.projectsTitleB ? `<br /><span class="gradient-text">${esc(copy.projectsTitleB)}</span>` : ""}</h1><p>${esc(copy.projectsDescription)}</p></header>
+  return `<main id="main" class="page-main wrap"><header class="page-heading"><h1>${esc(copy.projectsTitleA)}${copy.projectsTitleB ? `<br /><span class="accent-text">${esc(copy.projectsTitleB)}</span>` : ""}</h1><p>${esc(copy.projectsDescription)}</p></header>
     <div class="filter-row" role="group" aria-label="Filter projects"><button class="filter-button active" data-filter="all" aria-pressed="true">${esc(copy.filterAll)}</button><button class="filter-button" data-filter="programming" aria-pressed="false"><span class="filter-icon" aria-hidden="true">${icon.gamepad}</span>${esc(copy.filterProgramming)}</button><button class="filter-button" data-filter="audio" aria-pressed="false"><span class="filter-icon" aria-hidden="true"><span class="sound-bars"><i></i><i></i><i></i><i></i><i></i></span></span>${esc(copy.filterAudio)}</button></div>
     <div class="projects-page-grid">${groupBlock("programming", copy.programmingTitle, copy.projectsProgrammingDescription, programming, true)}${groupBlock("audio", copy.audioTitle, copy.projectsAudioDescription, audio, true)}</div>
   </main>`;
@@ -194,7 +193,7 @@ function gamesPage() {
   const width = Number(firstPlayable?.gameWidth) || 1080;
   const height = Number(firstPlayable?.gameHeight) || 1920;
   return `<main id="main" class="games-page wrap">
-    <header class="games-heading"><h1 id="games-page-title">${firstPlayable ? esc(firstPlayable.title) : `${esc(copy.gamesTitleA)} <span class="gradient-text">${esc(copy.gamesTitleB)}</span>`}</h1><p id="games-page-description" ${firstPlayable ? "hidden" : ""}>${esc(copy.gamesDescription)}</p></header>
+    <header class="games-heading"><h1 id="games-page-title">${firstPlayable ? esc(firstPlayable.title) : `${esc(copy.gamesTitleA)} <span class="accent-text">${esc(copy.gamesTitleB)}</span>`}</h1><p id="games-page-description" ${firstPlayable ? "hidden" : ""}>${esc(copy.gamesDescription)}</p></header>
     <section class="game-arcade" id="game-arcade" aria-label="Playable games">
       <aside class="game-drawer" id="game-drawer" aria-label="Game list">
         <div class="game-drawer-heading"><div><h2>${esc(copy.gamesReadyTitle)}</h2></div><button class="game-drawer-close" id="game-drawer-close" type="button" aria-label="Close game list">×</button></div>
@@ -211,8 +210,8 @@ function gamesPage() {
 }
 
 function aboutPage() {
-  return `<main id="main" class="page-main wrap"><header class="page-heading"><h1>${esc(copy.aboutTitleA)}${copy.aboutTitleB ? `<br /><span class="gradient-text">${esc(copy.aboutTitleB)}</span>` : ""}</h1><p class="about-lede">${esc(copy.aboutLead)}</p></header>
-    <section class="about-layout"><div class="about-story"><h2>${esc(copy.aboutStoryTitleA)}${copy.aboutStoryTitleB ? `<br />${esc(copy.aboutStoryTitleB)}` : ""}</h2><p>${esc(copy.aboutParagraph1)}</p><p>${esc(copy.aboutParagraph2)}</p>${copy.aboutParagraph3 ? `<p>${esc(copy.aboutParagraph3)}</p>` : ""}${copy.aboutParagraph4 ? `<p>${esc(copy.aboutParagraph4)}</p>` : ""}<div class="about-focus"><h3>${esc(copy.focusEyebrow)}</h3><ul class="tag-list">${splitCopy("focusAreas").map((item) => `<li>${esc(item)}</li>`).join("")}</ul></div><a class="button button-violet" href="projects.html">${esc(copy.aboutButton)} ${icon.arrow}</a>${contactActions("about-contact-actions")}</div></section>
+  return `<main id="main" class="page-main wrap"><header class="page-heading"><h1>${esc(copy.aboutTitleA)}${copy.aboutTitleB ? `<br /><span class="accent-text">${esc(copy.aboutTitleB)}</span>` : ""}</h1><p class="about-lede">${esc(copy.aboutLead)}</p></header>
+    <section class="about-layout"><div class="about-story"><h2>${esc(copy.aboutStoryTitleA)}${copy.aboutStoryTitleB ? `<br />${esc(copy.aboutStoryTitleB)}` : ""}</h2><p>${esc(copy.aboutParagraph1)}</p><p>${esc(copy.aboutParagraph2)}</p>${copy.aboutParagraph3 ? `<p>${esc(copy.aboutParagraph3)}</p>` : ""}${copy.aboutParagraph4 ? `<p>${esc(copy.aboutParagraph4)}</p>` : ""}<div class="about-focus"><h3>${esc(copy.focusEyebrow)}</h3><ul class="tag-list">${splitCopy("focusAreas").map((item) => `<li>${esc(item)}</li>`).join("")}</ul></div><a class="button button-primary" href="projects.html">${esc(copy.aboutButton)} ${icon.arrow}</a>${contactActions("about-contact-actions")}</div></section>
   </main>`;
 }
 
