@@ -470,4 +470,9 @@ body:before{content:"";inset:0;opacity:1;background:url("assets/glass-background
 .cv-preview-link:focus-visible{outline:2px solid var(--accent-hover);outline-offset:1px;background:rgba(131,167,214,.14)}
 .cv-preview-zoom{margin:12px}
 .cv-preview-unavailable{padding:24px;color:var(--muted)}
+.featured-work .project-grid{gap:20px;align-items:start}
+.featured-work .project-card{padding:16px}
+.featured-work .project-title{font-size:1.05rem}
+.featured-work-actions{display:flex;justify-content:center;margin-top:26px}
+@media(max-width:600px){.featured-work .project-grid{grid-template-columns:1fr;gap:14px}.featured-work .project-card{padding:12px}}
 @media(max-width:760px){.cv-preview{padding:15px}.cv-preview-heading{align-items:flex-start}.cv-preview-actions .footer-utility-button{padding-inline:9px}.footer-social-link{padding-inline:10px}}

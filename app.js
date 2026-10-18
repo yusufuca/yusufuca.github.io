@@ -157,8 +157,8 @@ function groupBlock(category, title, subtitle, items, compact = false) {
 }
 
 function homePage() {
-  const programming = projects.filter((item) => item.category === "programming");
-  const audio = projects.filter((item) => item.category === "audio");
+  const featured = ["sifb", "game-feel-systems", "dsp-demo", "16barlogic"]
+    .map((id) => projects.find((item) => item.id === id)).filter(Boolean);
   const showreelPlayerUrl = showreelEmbed ? `${showreelEmbed}&playsinline=1&controls=1` : "";
   return `<main id="main">
     <section class="hero wrap">
@@ -171,8 +171,9 @@ function homePage() {
       </div></div>
     </section>
     <section class="work-section wrap" id="work">
-      <header class="section-intro"><h2>${esc(copy.workTitle)}</h2></header>
-      <div class="work-columns">${groupBlock("programming", copy.programmingTitle, copy.programmingDescription, programming)}${groupBlock("audio", copy.audioTitle, copy.audioDescription, audio)}</div>
+      <header class="section-intro"><h2 id="featured-work-title">${esc(copy.workTitle)}</h2></header>
+      <div class="work-group featured-work" aria-labelledby="featured-work-title"><div class="project-grid">${featured.map((project) => projectCard(project)).join("")}</div></div>
+      <div class="featured-work-actions"><a class="button button-primary" href="projects.html">View All Projects ${icon.arrow}</a></div>
     </section>
   </main>`;
 }
