@@ -34,6 +34,14 @@ Edit `data/site.json` to add your GitHub, LinkedIn, itch.io and YouTube URLs, yo
 
 ## Deploy
 
+### Analytics
+
+`assets/analytics.js` loads GA4 (`G-2D209YMVV9`) only on the four public pages at `yusufuca.github.io`. Local previews, the admin editor and embedded Unity builds are excluded. Update the hostname guard if moving to a custom domain.
+
+All site links, buttons and project-card toggles send a custom `ui_click` event. `ui_action` identifies navigation, project expand/collapse, project filters/links, game selection/menu/fullscreen, CV download/open/zoom/links, contact-copy clicks and social links. Parameters include `button_name`, `page_name`, `ui_location`, and when relevant `project_id`, `destination_host`, `destination_path`. No copied email address, mailto destination, query string or free-text input is included in these custom events. Events record interaction attempts, not successful downloads, copies or fullscreen transitions.
+
+In GA4, check Realtime for `ui_click`. To break down historical events, create event-scoped custom dimensions in Admin → Custom definitions for `ui_action`, `button_name`, `ui_location`, `page_name` and `project_id`, then use Explore with event name `ui_click`. Enhanced measurement's `click` and `file_download` are separate automatic events; do not sum them with `ui_click` as unique interactions. Controls inside YouTube players, standalone PDFs or Unity iframes are not captured by the parent page's button listener.
+
 ### Update the CV
 
 Replace the PDF referenced by `cvUrl` in `data/site.json` (or update that path to a new PDF), then push. GitHub Actions automatically regenerates the preview image and extracts the clickable PDF links before deployment. Multiple pages are supported. Links must be actual clickable links in the PDF, not just printed URL text.
